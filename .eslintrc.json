@@ -8,7 +8,10 @@
     "prettier"
   ],
   "rules": {
-    "semi": "off",
+    "semi": [
+      "error",
+      "never"
+    ],
     "prefer-const": "error",
     "no-trailing-spaces": "warn",
     "quotes": [
