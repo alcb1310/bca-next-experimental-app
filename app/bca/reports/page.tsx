@@ -1,7 +1,13 @@
 export default function ReportsHome() {
     return (
-        <div className="m-5 text-dark">
-            <h1 className="uppercase font-bold p-3 text-center">Reports</h1>
+        <div className="flex justify-center">
+            <div className="container w-2/3">
+            <img
+                src="/images/reports-background.jpg"
+                alt="Report main page"
+                className="w-full rounded-lg shadow-2xl"
+            />
+            </div>
         </div>
     )
 }
