@@ -1,7 +1,13 @@
 export default function ParametersHome() {
-    return (
-        <div className="m-5 text-dark">
-            <h1 className="uppercase font-bold p-3 text-center">Parameters</h1>
-        </div>
-    )
+  return (
+    <div className="flex justify-center">
+      <div className="container w-2/3">
+        <img
+          className="w-full rounded-lg shadow-2xl"
+          src="/images/parameters-background.jpg"
+          alt="main page"
+        />
+      </div>
+    </div>
+  )
 }

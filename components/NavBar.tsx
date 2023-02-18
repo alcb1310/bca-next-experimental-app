@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 
 export default function NavBar() {
   const router = useRouter()
+
   async function logout() {
     const res = await fetch('/api/auth/logout', {
       method: 'POST',
