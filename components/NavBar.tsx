@@ -9,9 +9,7 @@ export default function NavBar() {
       method: 'POST',
     })
 
-    if (!res.ok) return
-
-    router.push('/bca')
+    router.push('/')
   }
 
   return (
@@ -21,14 +19,22 @@ export default function NavBar() {
           <Link className="mr-4" href="/">
             Home
           </Link>
-          <Link className="mr-4" href="/admin/dashboard">
-            Dashboard
+          <Link className="mr-4" href="/bca/transactions">
+            Transactions
           </Link>
-          <Link className="mr-4" href="/admin/users">
-            Users
+          <Link className="mr-4" href="/bca/reports">
+            Reports
+          </Link>
+          <Link className="mr-4" href="/bca/parameters">
+            Parameters
           </Link>
         </div>
-        <button onClick={() => logout()}>Logout</button>
+        <div className="flex">
+          <Link className="mr-4" href="/bca/users">
+            Users
+          </Link>
+          <button onClick={() => logout()}>Logout</button>
+        </div>
       </nav>
     </header>
   )
