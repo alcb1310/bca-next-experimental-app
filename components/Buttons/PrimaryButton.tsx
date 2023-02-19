@@ -5,7 +5,7 @@ export default function PrimaryButton(props: ButtonProps) {
 
   return (
     <button
-      className="mt-3 mr-2 rounded-lg bg-indigo-700 px-8 py-2 text-gray-200 shadow-lg hover:bg-gray-200 hover:text-indigo-700"
+      className="mt-3 mr-2 rounded-lg bg-dark px-8 py-2 text-light shadow-lg hover:bg-light hover:text-dark"
       // eslint-disable-next-line react/button-has-type
       type={buttonType}
       onClick={onEvent}
