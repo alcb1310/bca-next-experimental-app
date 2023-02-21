@@ -2,13 +2,15 @@
 
 import PrimaryButton from '@/components/Buttons/PrimaryButton'
 import { SelectElement } from '@/components/Inputs'
-import { ProjectType } from '@/types'
+import { returnTwoDigitFormattedNumber } from '@/helpers'
+import { BudgetFormattedResponseType, ProjectType } from '@/types'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
 export default function ActualHome() {
   const [projects, setProjects] = useState<ProjectType[]>([])
   const [selectedProject, setSelectedProject] = useState<string>('')
   const [level, setLevel] = useState<number>(1)
+  const [budgets, setBudgets] = useState<BudgetFormattedResponseType[]>([])
 
   useEffect(() => {
     ;(async () => {
@@ -33,6 +35,14 @@ export default function ActualHome() {
     const res = await fetch(
       `/api/budget?project=${selectedProject}&level=${level}`
     )
+
+    if (!res.ok) {
+      console.error('invalid data')
+      return
+    }
+
+    const data = await res.json()
+    setBudgets(data.detail)
   }
 
   const projectElement = projects.map((project) => {
@@ -42,6 +52,62 @@ export default function ActualHome() {
       </option>
     )
   })
+
+  const tableBody = budgets.map((budget) => {
+    return (
+      <tr key={budget.uuid} className="hover:bg-light">
+        <td className="px-3">{budget.budgetItem.code}</td>
+        <td className="px-3">{budget.budgetItem.name}</td>
+        <td className="px-3 text-right">
+          {budget.to_spend_cost
+            ? returnTwoDigitFormattedNumber(budget.to_spend_cost)
+            : ''}
+        </td>
+        <td className="px-3 text-right">
+          {returnTwoDigitFormattedNumber(budget.to_spend_total)}
+        </td>
+        <td className="px-3 text-right">
+          {budget.spent_quantity
+            ? returnTwoDigitFormattedNumber(budget.spent_quantity)
+            : ''}
+        </td>
+        <td className="px-3 text-right">
+          {budget.to_spend_cost
+            ? returnTwoDigitFormattedNumber(budget.to_spend_cost)
+            : ''}
+        </td>
+        <td className="px-3 text-right">
+          {returnTwoDigitFormattedNumber(budget.to_spend_total)}
+        </td>
+        <td className="px-3 text-right">
+          {returnTwoDigitFormattedNumber(budget.updated_budget)}
+        </td>
+      </tr>
+    )
+  })
+
+  const tableData = (
+    <table className="mx-auto mt-5 table-fixed">
+      <thead className="border-b-2 border-black bg-indigo-200 text-center font-bold">
+        <tr>
+          <th colSpan={2}>Budget Item</th>
+          <th colSpan={2}>Spent</th>
+          <th colSpan={3}>To Spend</th>
+          <th rowSpan={2}>Total</th>
+        </tr>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Quantity</th>
+          <th>Cost</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>{tableBody}</tbody>
+    </table>
+  )
 
   return (
     <>
@@ -77,6 +143,7 @@ export default function ActualHome() {
           onEvent={handleSubmit}
         />
       </form>
+      {budgets.length > 0 && tableData}
     </>
   )
 }

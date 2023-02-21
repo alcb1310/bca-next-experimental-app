@@ -1,12 +1,16 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { BudgetResponseType, ErrorInterface } from '@/types'
 import prisma from '@/prisma/client'
 import { getUserByEmailWithoutPassword, validateCookie } from '../helpers/users'
 import { formatManyBudgetResponse } from '@/helpers/formatBudgetResponse'
+import type { NextApiRequest, NextApiResponse } from 'next'
+import type {
+  BudgetFormattedResponseType,
+  BudgetResponseType,
+  ErrorInterface,
+} from '@/types'
 
 type Data = {
-  detail: string | ErrorInterface
+  detail: string | ErrorInterface | BudgetFormattedResponseType[]
 }
 
 export default async function handler(
@@ -36,7 +40,6 @@ export default async function handler(
       })
 
     const { project, level } = req.query
-    console.log(user.companyUuid, project, level)
 
     if (typeof project === 'string' && typeof level === 'string') {
       const results = (await prisma.budgetView.findMany({
@@ -52,8 +55,7 @@ export default async function handler(
         },
       })) as BudgetResponseType[]
 
-      console.log(formatManyBudgetResponse(results))
-      return res.status(200).json({ detail: 'Budget Information' })
+      return res.status(200).json({ detail: formatManyBudgetResponse(results) })
     }
 
     return res.status(400).json({
