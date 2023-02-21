@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -20,14 +21,14 @@ model actual {
   to_spend_total    Float
   updated_budget    Float
   created_at        DateTime     @default(now()) @db.Timestamptz(6)
-  userUuid          String?      @db.Uuid
-  companyUuid       String?      @db.Uuid
-  budgetItemUuid    String?      @db.Uuid
-  projectUuid       String?      @db.Uuid
-  project           project?     @relation(fields: [projectUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_02bed64c2c1872db6f45b98f230")
-  company           company?     @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_456392568b79e1486a33d2dec0f")
-  user              user?        @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_75033ed0f74128723e077a26426")
-  budget_item       budget_item? @relation(fields: [budgetItemUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_ba20a50b524acd2d3585e37ccc7")
+  userUuid          String      @db.Uuid
+  companyUuid       String      @db.Uuid
+  budgetItemUuid    String      @db.Uuid
+  projectUuid       String      @db.Uuid
+  project           project     @relation(fields: [projectUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_02bed64c2c1872db6f45b98f230")
+  company           company     @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_456392568b79e1486a33d2dec0f")
+  user              user        @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_75033ed0f74128723e077a26426")
+  budget_item       budget_item @relation(fields: [budgetItemUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_ba20a50b524acd2d3585e37ccc7")
 
   @@unique([companyUuid, budgetItemUuid, projectUuid, date], map: "UQ_b8f062edbaae5b4790233194b38")
 }
@@ -44,14 +45,14 @@ model budget {
   to_spend_total    Float
   updated_budget    Float
   created_at        DateTime     @default(now()) @db.Timestamptz(6)
-  userUuid          String?      @db.Uuid
-  companyUuid       String?      @db.Uuid
-  budgetItemUuid    String?      @db.Uuid
-  projectUuid       String?      @db.Uuid
-  user              user?        @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_52c877a5fe37edb91c3f47e627d")
-  company           company?     @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_656ef245a9ca4a5af03446a250e")
-  project           project?     @relation(fields: [projectUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_e07a6bbacc6f5d89ef95e51d824")
-  budget_item       budget_item? @relation(fields: [budgetItemUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_e6fbe3f575219c8ade814c6dc96")
+  userUuid          String      @db.Uuid
+  companyUuid       String      @db.Uuid
+  budgetItemUuid    String      @db.Uuid
+  projectUuid       String      @db.Uuid
+  user              user        @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_52c877a5fe37edb91c3f47e627d")
+  company           company     @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_656ef245a9ca4a5af03446a250e")
+  project           project     @relation(fields: [projectUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_e07a6bbacc6f5d89ef95e51d824")
+  budget_item       budget_item @relation(fields: [budgetItemUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_e6fbe3f575219c8ade814c6dc96")
 
   @@unique([companyUuid, budgetItemUuid, projectUuid], map: "UQ_d465c5c453b817365b87356b222")
 }
@@ -62,14 +63,14 @@ model budget_item {
   name              String           @db.VarChar(255)
   accumulates       Boolean
   level             Int
-  parentUuid        String?          @db.Uuid
+  parentUuid        String          @db.Uuid
   companyUuid       String           @db.Uuid
   userUuid          String           @db.Uuid
   created_at        DateTime         @default(now()) @db.Timestamptz(6)
   actual            actual[]
   budget            budget[]
   user              user             @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_a23b85c6764b8dfe2085b25cc73")
-  budget_item       budget_item?     @relation("budget_itemTobudget_item", fields: [parentUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_a4fbfdd8f791dacff590e5ed9c7")
+  budget_item       budget_item     @relation("budget_itemTobudget_item", fields: [parentUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_a4fbfdd8f791dacff590e5ed9c7")
   other_budget_item budget_item[]    @relation("budget_itemTobudget_item")
   company           company          @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_dae1c48d1ec9c22078c242c0140")
   historic          historic[]
@@ -110,14 +111,14 @@ model historic {
   to_spend_total    Float
   updated_budget    Float
   created_at        DateTime     @default(now()) @db.Timestamptz(6)
-  userUuid          String?      @db.Uuid
-  companyUuid       String?      @db.Uuid
-  budgetItemUuid    String?      @db.Uuid
-  projectUuid       String?      @db.Uuid
-  user              user?        @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_1b8b8e8f110cbf6e1d67c3a86c6")
-  project           project?     @relation(fields: [projectUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_5f741e2738d9ba0e73fd767062d")
-  company           company?     @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_a07b488758a3b4fc3ba051f9b39")
-  budget_item       budget_item? @relation(fields: [budgetItemUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_f0323e1bdf089a7cdf6043ec9ab")
+  userUuid          String      @db.Uuid
+  companyUuid       String      @db.Uuid
+  budgetItemUuid    String      @db.Uuid
+  projectUuid       String      @db.Uuid
+  user              user        @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_1b8b8e8f110cbf6e1d67c3a86c6")
+  project           project     @relation(fields: [projectUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_5f741e2738d9ba0e73fd767062d")
+  company           company     @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_a07b488758a3b4fc3ba051f9b39")
+  budget_item       budget_item @relation(fields: [budgetItemUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_f0323e1bdf089a7cdf6043ec9ab")
 
   @@unique([companyUuid, budgetItemUuid, projectUuid, date], map: "UQ_6b3da41aeaaac2ea0ff9063613d")
 }
@@ -128,14 +129,14 @@ model invoice {
   date           DateTime         @db.Date
   total          Float
   created_at     DateTime         @default(now()) @db.Timestamptz(6)
-  companyUuid    String?          @db.Uuid
-  userUuid       String?          @db.Uuid
-  projectUuid    String?          @db.Uuid
-  supplierUuid   String?          @db.Uuid
-  project        project?         @relation(fields: [projectUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_27dd439067c11b483c48b4a694f")
-  user           user?            @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_2eb1bbce9f556ac6d4da9e58483")
-  supplier       supplier?        @relation(fields: [supplierUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_801d708d207c5411da32c00c8bd")
-  company        company?         @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_a6ce41def95254e11eddb2d4f7c")
+  companyUuid    String          @db.Uuid
+  userUuid       String          @db.Uuid
+  projectUuid    String          @db.Uuid
+  supplierUuid   String          @db.Uuid
+  project        project         @relation(fields: [projectUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_27dd439067c11b483c48b4a694f")
+  user           user            @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_2eb1bbce9f556ac6d4da9e58483")
+  supplier       supplier        @relation(fields: [supplierUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_801d708d207c5411da32c00c8bd")
+  company        company         @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_a6ce41def95254e11eddb2d4f7c")
   invoice_detail invoice_detail[]
 
   @@unique([companyUuid, supplierUuid, invoice_number], map: "UQ_58cac7655d671763fe362193ee1")
@@ -147,14 +148,14 @@ model invoice_detail {
   cost           Float
   total          Float
   created_at     DateTime     @default(now()) @db.Timestamptz(6)
-  companyUuid    String?      @db.Uuid
-  userUuid       String?      @db.Uuid
-  invoiceUuid    String?      @db.Uuid
-  budgetItemUuid String?      @db.Uuid
-  budget_item    budget_item? @relation(fields: [budgetItemUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_3f8a5edcb6c041d6d26edb6afb2")
-  company        company?     @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_5e20c0c0447108815afe267c154")
-  user           user?        @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_808915c75bb73c93f2b3411d96c")
-  invoice        invoice?     @relation(fields: [invoiceUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_ca6166dfcb4eb139f9e9de09fc5")
+  companyUuid    String      @db.Uuid
+  userUuid       String      @db.Uuid
+  invoiceUuid    String      @db.Uuid
+  budgetItemUuid String      @db.Uuid
+  budget_item    budget_item @relation(fields: [budgetItemUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_3f8a5edcb6c041d6d26edb6afb2")
+  company        company     @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_5e20c0c0447108815afe267c154")
+  user           user        @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_808915c75bb73c93f2b3411d96c")
+  invoice        invoice     @relation(fields: [invoiceUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_ca6166dfcb4eb139f9e9de09fc5")
 
   @@unique([companyUuid, invoiceUuid, budgetItemUuid], map: "UQ_e1145d74c2bc5c363f03f578312")
 }
@@ -164,14 +165,14 @@ model project {
   name        String     @db.VarChar(255)
   is_active   Boolean
   created_at  DateTime   @default(now()) @db.Timestamptz(6)
-  companyUuid String?    @db.Uuid
-  userUuid    String?    @db.Uuid
+  companyUuid String    @db.Uuid
+  userUuid    String    @db.Uuid
   actual      actual[]
   budget      budget[]
   historic    historic[]
   invoice     invoice[]
-  user        user?      @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_1a0f1c7c38d3b95ebb085dcd886")
-  company     company?   @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_e7657038cf2af0ac02bcaf375d3")
+  user        user      @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_1a0f1c7c38d3b95ebb085dcd886")
+  company     company   @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_e7657038cf2af0ac02bcaf375d3")
 
   @@unique([companyUuid, name], map: "UQ_61ce21107868524097971f71910")
 }
@@ -184,11 +185,11 @@ model supplier {
   contact_email String?   @db.VarChar(255)
   contact_phone String?   @db.VarChar(255)
   created_at    DateTime  @default(now()) @db.Timestamptz(6)
-  companyUuid   String?   @db.Uuid
-  userUuid      String?   @db.Uuid
+  companyUuid   String   @db.Uuid
+  userUuid      String   @db.Uuid
   invoice       invoice[]
-  user          user?     @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_9bfbb75370f133c1181d076254a")
-  company       company?  @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_b8912ad1081a620d0f397b57136")
+  user          user     @relation(fields: [userUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_9bfbb75370f133c1181d076254a")
+  company       company  @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_b8912ad1081a620d0f397b57136")
 
   @@unique([name, companyUuid], map: "UQ_1930e0158781fc62c874cb9afa7")
   @@unique([supplier_id, companyUuid], map: "UQ_9f57ed8a5a42a044198913aaa59")
@@ -200,7 +201,7 @@ model user {
   password       String           @db.VarChar(70)
   name           String           @db.VarChar(255)
   created_at     DateTime         @default(now()) @db.Timestamptz(6)
-  companyUuid    String?          @db.Uuid
+  companyUuid    String          @db.Uuid
   actual         actual[]
   budget         budget[]
   budget_item    budget_item[]
@@ -209,5 +210,26 @@ model user {
   invoice_detail invoice_detail[]
   project        project[]
   supplier       supplier[]
-  company        company?         @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_476e1fb6a4f7a62a9e5d0eed19c")
+  company        company         @relation(fields: [companyUuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "FK_476e1fb6a4f7a62a9e5d0eed19c")
+}
+
+view BudgetView {
+  id                String @db.Uuid @unique
+  initial_quantity  Float?
+  initial_cost      Float?
+  initial_total     Float
+  spent_quantity    Float?
+  spent_total       Float
+  to_spend_quantity Float?
+  to_spend_cost     Float?
+  to_spend_total    Float
+  updated_budget    Float
+  project_uuid      String @db.Uuid
+  project_name      String @db.VarChar(255)
+  budget_item_uuid  String @db.Uuid
+  code              String @db.VarChar(50)
+  budget_item_name  String @db.VarChar(255)
+  level             Int
+  company_uuid      String @db.Uuid
+  company_name      String @db.VarChar
 }
