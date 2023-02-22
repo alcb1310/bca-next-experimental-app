@@ -1,8 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import {
-  getUserByEmailWithoutPassword,
-  validateCookie,
-} from '@/pages/helpers/users'
+import { validateLoginInformation } from '@/pages/helpers/users'
 import prisma from '@/prisma/client'
 import { ErrorInterface, Balance } from '@/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -21,25 +18,11 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'GET') {
-    const cookie = validateCookie(req)
-    if (cookie === false)
-      return res.status(401).json({
-        detail: {
-          errorStatus: 401,
-          errorDescription: 'You need to log in',
-          errorKey: 'credentials',
-        },
-      })
+    const user = await validateLoginInformation(req)
+    if ('errorStatus' in user) {
+      return res.status(user.errorStatus).json({ detail: user })
+    }
 
-    const user = await getUserByEmailWithoutPassword(cookie)
-    if (user === null)
-      return res.status(417).json({
-        detail: {
-          errorStatus: 417,
-          errorDescription: 'Invalid cookie information',
-          errorKey: 'credentials',
-        },
-      })
     const { project, date } = req.query as Query
 
     if (project === undefined)
