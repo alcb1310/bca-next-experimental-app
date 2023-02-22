@@ -6,6 +6,7 @@ import {
   BudgetResponseType,
   BudgetFormattedResponseType,
 } from './BudgetResponseType'
+import { CompanyCreateType, CompanyResponseType } from '@/CompanyType'
 
 export type {
   ErrorInterface,
@@ -14,4 +15,6 @@ export type {
   ProjectType,
   BudgetResponseType,
   BudgetFormattedResponseType,
+  CompanyCreateType,
+  CompanyResponseType,
 }
