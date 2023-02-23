@@ -7,6 +7,7 @@ import {
   BudgetFormattedResponseType,
 } from './BudgetResponseType'
 import { CompanyCreateType, CompanyResponseType } from '@/CompanyType'
+import { UserResponseType } from './UserTypes'
 
 export type {
   ErrorInterface,
@@ -17,4 +18,5 @@ export type {
   BudgetFormattedResponseType,
   CompanyCreateType,
   CompanyResponseType,
+  UserResponseType,
 }
