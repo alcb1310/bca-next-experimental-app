@@ -6,9 +6,15 @@ import {
   BudgetResponseType,
   BudgetFormattedResponseType,
 } from './BudgetResponseType'
-import { CompanyCreateType, CompanyResponseType } from '@/CompanyType'
+import {
+  CompanyCreateType,
+  CompanyResponseType,
+  CompanyDataResponseType,
+} from './CompanyTypes'
 import { UserResponseType } from './UserTypes'
 import { UserInputType } from './UserInputTypeProps'
+import { BudgetItemDataType } from './BudgetItemTypes'
+import { InvoiceDataType } from './InvoiceTypes'
 
 export type {
   ErrorInterface,
@@ -21,4 +27,7 @@ export type {
   CompanyResponseType,
   UserResponseType,
   UserInputType,
+  CompanyDataResponseType,
+  BudgetItemDataType,
+  InvoiceDataType,
 }
