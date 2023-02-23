@@ -8,6 +8,7 @@ import {
 } from './BudgetResponseType'
 import { CompanyCreateType, CompanyResponseType } from '@/CompanyType'
 import { UserResponseType } from './UserTypes'
+import { UserInputType } from './UserInputTypeProps'
 
 export type {
   ErrorInterface,
@@ -19,4 +20,5 @@ export type {
   CompanyCreateType,
   CompanyResponseType,
   UserResponseType,
+  UserInputType,
 }
