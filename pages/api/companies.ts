@@ -1,9 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { CompanyResponseType } from '@/CompanyType'
+import { hashPassword } from '@/helpers/hashPassword'
 import prisma from '@/prisma/client'
-import { ErrorInterface } from '@/types'
+import { ErrorInterface, CompanyResponseType } from '@/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { v4 } from 'uuid'
+import { getCompanyInformation } from '../helpers/company'
+import { validateLoginInformation } from '../helpers/users'
 
 type Data = {
   detail: string | ErrorInterface | CompanyResponseType
@@ -14,7 +16,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'POST') {
-    const { name, ruc, employees } = req.body
+    const { name, ruc, employees, email, password, username } = req.body
 
     if (name === null || name === undefined)
       return res.status(400).json({
@@ -53,15 +55,54 @@ export default async function handler(
         },
       })
 
+    if (email === null || email === undefined)
+      return res.status(400).json({
+        detail: {
+          errorStatus: 400,
+          errorKey: 'email',
+          errorDescription: 'email must be a number',
+        },
+      })
+
+    if (password === null || password === undefined)
+      return res.status(400).json({
+        detail: {
+          errorStatus: 400,
+          errorKey: 'password',
+          errorDescription: 'password must be a number',
+        },
+      })
+
+    if (username === null || username === undefined)
+      return res.status(400).json({
+        detail: {
+          errorStatus: 400,
+          errorKey: 'username',
+          errorDescription: 'username must be a number',
+        },
+      })
+
+    const companyUuid = v4()
+    const hashedPassword = await hashPassword(password)
+
     try {
       const [company] = await prisma.$transaction([
         prisma.company.create({
           data: {
-            uuid: v4(),
+            uuid: companyUuid,
             name: name,
             ruc: ruc,
             employees: employees,
             isActive: true,
+          },
+        }),
+        prisma.user.create({
+          data: {
+            uuid: v4(),
+            name: username,
+            email,
+            password: hashedPassword,
+            companyUuid,
           },
         }),
       ])
@@ -93,6 +134,62 @@ export default async function handler(
         },
       })
     }
+  }
+
+  if (req.method === 'GET') {
+    const user = await validateLoginInformation(req)
+    if ('errorStatus' in user)
+      return res.status(user.errorStatus).json({ detail: user })
+
+    const company = await getCompanyInformation(user.companyUuid)
+
+    if (company === null || company === undefined)
+      return res.status(417).json({
+        detail: {
+          errorStatus: 417,
+          errorDescription: 'Invalid cookie information',
+        },
+      })
+
+    return res.status(200).json({ detail: company })
+  }
+
+  if (req.method === 'PUT') {
+    const user = await validateLoginInformation(req)
+    if ('errorStatus' in user)
+      return res.status(user.errorStatus).json({ detail: user })
+
+    const { name, ruc, employees } = req.body
+
+    const company = await getCompanyInformation(user.companyUuid)
+    if (company === null || company === undefined)
+      return res.status(417).json({
+        detail: {
+          errorStatus: 417,
+          errorDescription: 'Invalid cookie information',
+        },
+      })
+
+    const result = await prisma.company.update({
+      where: {
+        uuid: user.companyUuid,
+      },
+      data: {
+        name: name ? name : company.name,
+        ruc: ruc ? ruc : company.ruc,
+        employees: employees ? employees : company.employees,
+      },
+    })
+
+    return res.status(200).json({
+      detail: {
+        uuid: result.uuid,
+        ruc: result.ruc,
+        name: result.name,
+        employees: result.employees,
+        isActive: result.isActive,
+      },
+    })
   }
 
   res.status(500).json({ detail: 'Method not implemented' })
