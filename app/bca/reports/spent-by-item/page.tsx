@@ -2,8 +2,10 @@
 
 import PrimaryButton from '@/components/Buttons/PrimaryButton'
 import { InputElement, SelectElement } from '@/components/Inputs'
+import InvoiceDetailReportModal from '@/components/Modals/InvoiceDetailReportModal'
 import { returnTwoDigitFormattedNumber } from '@/helpers'
 import { ProjectType } from '@/types'
+import { BudgetItemViewResponseType } from '@/types/BudgetItemViewResponseType'
 import { budget_item } from '@prisma/client'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
@@ -18,6 +20,10 @@ export default function SpentByItem() {
   const [level, setLevel] = useState<number>(1)
   const [date, setDate] = useState<string>('')
   const [spentByItem, setSpentByItem] = useState<SpentByItemReportType[]>([])
+  const [invoiceDetailsInfo, setInvoiceDetailsInfo] = useState<
+    BudgetItemViewResponseType[]
+  >([])
+  const [showModal, setShowModal] = useState<boolean>(false)
 
   useEffect(() => {
     ;(async () => {
@@ -53,6 +59,17 @@ export default function SpentByItem() {
     setSpentByItem(data.detail)
   }
 
+  async function handleItemClick(budgetItemUUID: string) {
+    const results = await fetch(
+      `/api/reports/spent-budget-items/${budgetItemUUID}?project=${selectedProject}&date=${date}`
+    )
+    if (!results.ok) return
+
+    const data = await results.json()
+    setInvoiceDetailsInfo(data.detail)
+    setShowModal(true)
+  }
+
   const projectsOptions = projects.map((project) => (
     <option key={project.uuid} value={project.uuid}>
       {project.name}
@@ -65,6 +82,7 @@ export default function SpentByItem() {
     <tr
       key={data.budgetItem.uuid}
       className="cursor-pointer even:bg-light hover:bg-indigo-300"
+      onClick={() => handleItemClick(data.budgetItem.uuid)}
     >
       <td className="px-3">{data.budgetItem.code}</td>
       <td className="px-3">{data.budgetItem.name}</td>
@@ -144,6 +162,12 @@ export default function SpentByItem() {
         />
       </form>
       {spentByItem.length > 0 && reportDisplayData}
+      {showModal && (
+        <InvoiceDetailReportModal
+          invoiceData={invoiceDetailsInfo}
+          setShowModal={setShowModal}
+        />
+      )}
     </>
   )
 }

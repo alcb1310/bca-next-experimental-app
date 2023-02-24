@@ -3,6 +3,7 @@ import {
   CompanyDataResponseType,
   InvoiceDataType,
   ProjectType,
+  SupplierDataType,
 } from './'
 
 export type BudgetItemViewResponseType = {
@@ -14,4 +15,5 @@ export type BudgetItemViewResponseType = {
   budgetItem: BudgetItemDataType
   invoice: InvoiceDataType
   project: ProjectType
+  supplier: SupplierDataType
 }

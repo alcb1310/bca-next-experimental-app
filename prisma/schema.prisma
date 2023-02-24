@@ -250,6 +250,8 @@ view BudgetItemView {
   invoice_uuid     String   @db.Uuid
   invoice_number   String   @db.VarChar(255)
   date             DateTime @db.Date
-  project_uuid     String  @db.Uuid
-  project_name     String  @db.VarChar(255)
+  project_uuid     String   @db.Uuid
+  project_name     String   @db.VarChar(255)
+  supplier_uuid    String   @db.Uuid
+  supplier_name    String   @db.VarChar(255)
 }

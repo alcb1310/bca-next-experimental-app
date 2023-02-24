@@ -37,5 +37,9 @@ export function formatOneBudgetItemViewResponse(
       uuid: budgetItem.project_uuid as string,
       name: budgetItem.project_name as string,
     },
+    supplier: {
+      uuid: budgetItem.supplier_uuid as string,
+      name: budgetItem.supplier_name as string,
+    },
   }
 }
