@@ -255,3 +255,26 @@ view BudgetItemView {
   supplier_uuid    String   @db.Uuid
   supplier_name    String   @db.VarChar(255)
 }
+
+view HistoricView {
+  id                String   @unique @db.Uuid
+  date              DateTime @db.Date
+  initial_quantity  Float?
+  initial_cost      Float?
+  initial_total     Float
+  spent_quantity    Float?
+  spent_total       Float
+  to_spend_quantity Float?
+  to_spend_cost     Float?
+  to_spend_total    Float
+  updated_budget    Float
+  company_uuid      String   @db.Uuid
+  company_name      String   @db.VarChar
+  project_uuid      String   @db.Uuid
+  project_name      String   @db.VarChar(255)
+  budget_item_uuid  String   @db.Uuid
+  code              String   @db.VarChar(50)
+  budget_item_name  String   @db.VarChar(255)
+  accumulates       Boolean
+  level             Int
+}
