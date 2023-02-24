@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { CompanyResponseType } from '@/CompanyType'
+import { hashPassword } from '@/helpers/hashPassword'
 import prisma from '@/prisma/client'
 import { ErrorInterface } from '@/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -14,7 +15,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'POST') {
-    const { name, ruc, employees } = req.body
+    const { name, ruc, employees, email, password, username } = req.body
 
     if (name === null || name === undefined)
       return res.status(400).json({
@@ -53,15 +54,54 @@ export default async function handler(
         },
       })
 
+    if (email === null || email === undefined)
+      return res.status(400).json({
+        detail: {
+          errorStatus: 400,
+          errorKey: 'email',
+          errorDescription: 'email must be a number',
+        },
+      })
+
+    if (password === null || password === undefined)
+      return res.status(400).json({
+        detail: {
+          errorStatus: 400,
+          errorKey: 'password',
+          errorDescription: 'password must be a number',
+        },
+      })
+
+    if (username === null || username === undefined)
+      return res.status(400).json({
+        detail: {
+          errorStatus: 400,
+          errorKey: 'username',
+          errorDescription: 'username must be a number',
+        },
+      })
+
+    const companyUuid = v4()
+    const hashedPassword = await hashPassword(password)
+
     try {
       const [company] = await prisma.$transaction([
         prisma.company.create({
           data: {
-            uuid: v4(),
+            uuid: companyUuid,
             name: name,
             ruc: ruc,
             employees: employees,
             isActive: true,
+          },
+        }),
+        prisma.user.create({
+          data: {
+            uuid: v4(),
+            name: username,
+            email,
+            password: hashedPassword,
+            companyUuid,
           },
         }),
       ])
