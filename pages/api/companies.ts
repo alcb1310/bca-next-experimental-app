@@ -1,10 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { CompanyResponseType } from '@/CompanyType'
 import { hashPassword } from '@/helpers/hashPassword'
 import prisma from '@/prisma/client'
-import { ErrorInterface } from '@/types'
+import { ErrorInterface, CompanyResponseType } from '@/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { v4 } from 'uuid'
+import { getCompanyInformation } from '../helpers/company'
+import { validateLoginInformation } from '../helpers/users'
 
 type Data = {
   detail: string | ErrorInterface | CompanyResponseType
@@ -133,6 +134,62 @@ export default async function handler(
         },
       })
     }
+  }
+
+  if (req.method === 'GET') {
+    const user = await validateLoginInformation(req)
+    if ('errorStatus' in user)
+      return res.status(user.errorStatus).json({ detail: user })
+
+    const company = await getCompanyInformation(user.companyUuid)
+
+    if (company === null || company === undefined)
+      return res.status(417).json({
+        detail: {
+          errorStatus: 417,
+          errorDescription: 'Invalid cookie information',
+        },
+      })
+
+    return res.status(200).json({ detail: company })
+  }
+
+  if (req.method === 'PUT') {
+    const user = await validateLoginInformation(req)
+    if ('errorStatus' in user)
+      return res.status(user.errorStatus).json({ detail: user })
+
+    const { name, ruc, employees } = req.body
+
+    const company = await getCompanyInformation(user.companyUuid)
+    if (company === null || company === undefined)
+      return res.status(417).json({
+        detail: {
+          errorStatus: 417,
+          errorDescription: 'Invalid cookie information',
+        },
+      })
+
+    const result = await prisma.company.update({
+      where: {
+        uuid: user.companyUuid,
+      },
+      data: {
+        name: name ? name : company.name,
+        ruc: ruc ? ruc : company.ruc,
+        employees: employees ? employees : company.employees,
+      },
+    })
+
+    return res.status(200).json({
+      detail: {
+        uuid: result.uuid,
+        ruc: result.ruc,
+        name: result.name,
+        employees: result.employees,
+        isActive: result.isActive,
+      },
+    })
   }
 
   res.status(500).json({ detail: 'Method not implemented' })
