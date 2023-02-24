@@ -1,4 +1,4 @@
-import { UserInputTypeProps } from "../../types";
+import { UserInputTypeProps } from '@/types'
 
 export default function InputElement({
   label,
@@ -12,7 +12,7 @@ export default function InputElement({
 }: UserInputTypeProps) {
   return (
     <>
-      <label className="block mt-4 mb-2 text-indigo-700" htmlFor={inputName}>
+      <label className="mt-4 mb-2 block text-indigo-700" htmlFor={inputName}>
         {label} {required && <span className="text-red-600">*</span>}
       </label>
       <input
@@ -23,16 +23,16 @@ export default function InputElement({
         required={required}
         placeholder={label}
         type={inputType}
-        className={`block rounded-md w-full text-indigo-700 focus:border-indigo-700 focus:ring-indigo-700 ${
+        className={`block w-full rounded-md text-indigo-700 focus:border-indigo-700 focus:ring-indigo-700 ${
           error !== null &&
           error.errorKey === inputName &&
-          "border-red-600 border-2"
+          'border-2 border-red-600'
         }`}
         value={value}
       />
       {error !== null && error.errorKey === inputName && (
-        <p className="text-red-600 text-sm">{error.errorDescription}</p>
+        <p className="text-sm text-red-600">{error.errorDescription}</p>
       )}
     </>
-  );
+  )
 }

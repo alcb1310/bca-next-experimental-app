@@ -1,5 +1,5 @@
 export interface ErrorInterface {
-    errorStatus: number;
-    errorKey: string;
-    errorDescription: string;
+  errorStatus: number
+  errorKey?: string
+  errorDescription: string
 }
