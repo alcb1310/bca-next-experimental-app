@@ -3,7 +3,7 @@
 import PrimaryButton from '@/components/Buttons/PrimaryButton'
 import SupplierFormModal from '@/components/Modals/SupplierFormModal'
 import { SupplierResponseType } from '@/types'
-import { SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function SupplierHome() {
   const [suppliers, setSuppliers] = useState<SupplierResponseType[]>([])
@@ -18,7 +18,7 @@ export default function SupplierHome() {
       const data = await response.json()
       setSuppliers(data.detail)
     })()
-  }, [])
+  }, [showModal])
 
   function handleAddClick() {
     setSelectedSupplier(undefined)
