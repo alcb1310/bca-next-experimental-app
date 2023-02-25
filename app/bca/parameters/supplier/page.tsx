@@ -1,11 +1,16 @@
 'use client'
 
 import PrimaryButton from '@/components/Buttons/PrimaryButton'
+import SupplierFormModal from '@/components/Modals/SupplierFormModal'
 import { SupplierResponseType } from '@/types'
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 
 export default function SupplierHome() {
   const [suppliers, setSuppliers] = useState<SupplierResponseType[]>([])
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [selectedSupplier, setSelectedSupplier] = useState<
+    SupplierResponseType | undefined
+  >(undefined)
 
   useEffect(() => {
     ;(async () => {
@@ -15,10 +20,20 @@ export default function SupplierHome() {
     })()
   }, [])
 
-  function handleAddClick() {}
+  function handleAddClick() {
+    setSelectedSupplier(undefined)
+    setShowModal(true)
+  }
 
   const supplierData = suppliers.map((supplier) => (
-    <tr className="even:bg-indigo-50 hover:bg-indigo-300" key={supplier.uuid}>
+    <tr
+      className="even:bg-indigo-50 hover:bg-indigo-300"
+      key={supplier.uuid}
+      onClick={() => {
+        setSelectedSupplier(supplier)
+        setShowModal(true)
+      }}
+    >
       <td className="border-x-2 p-3">{supplier.supplier_id}</td>
       <td className="border-x-2 p-3">{supplier.name}</td>
       <td className="border-x-2 p-3">{supplier.contact_name}</td>
@@ -60,6 +75,12 @@ export default function SupplierHome() {
         </thead>
         <tbody>{supplierData}</tbody>
       </table>
+      {showModal && (
+        <SupplierFormModal
+          setShowModal={setShowModal}
+          supplierData={selectedSupplier}
+        />
+      )}
     </>
   )
 }
