@@ -15,7 +15,7 @@ import { UserResponseType } from './UserTypes'
 import { UserInputType } from './UserInputTypeProps'
 import { BudgetItemDataType } from './BudgetItemTypes'
 import { InvoiceDataType } from './InvoiceTypes'
-import { SupplierDataType } from './SupplierTypes'
+import { SupplierDataType, SupplierResponseType } from './SupplierTypes'
 
 export type {
   ErrorInterface,
@@ -32,4 +32,5 @@ export type {
   BudgetItemDataType,
   InvoiceDataType,
   SupplierDataType,
+  SupplierResponseType,
 }
