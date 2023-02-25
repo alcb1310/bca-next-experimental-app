@@ -37,6 +37,9 @@ export default async function handler(
           },
         },
       },
+      orderBy: {
+        code: 'asc',
+      },
     })
 
     return res.status(200).json({ detail: budgetItems })
