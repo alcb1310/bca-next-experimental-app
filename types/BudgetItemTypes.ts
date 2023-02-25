@@ -12,5 +12,5 @@ export type BudgetItemResponseType = {
   name: string
   accumulates: boolean
   level: number
-  budget_item: BudgetItemDataType | null
+  budget_item?: BudgetItemDataType | null
 }
