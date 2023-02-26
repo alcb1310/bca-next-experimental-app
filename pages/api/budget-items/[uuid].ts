@@ -81,6 +81,22 @@ export default async function handler(
           accumulates: acc,
           level: lev,
         },
+        select: {
+          uuid: true,
+          code: true,
+          name: true,
+          level: true,
+          accumulates: true,
+          budget_item: {
+            select: {
+              uuid: true,
+              code: true,
+              name: true,
+              level: true,
+              accumulates: true,
+            },
+          },
+        },
       })
 
       return res.status(200).json({ detail: response })
