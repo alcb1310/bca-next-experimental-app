@@ -138,7 +138,7 @@ export default function SpentByItem() {
           inputType="date"
           onChange={handleDateChange}
           value={date}
-          enalbled
+          enabled
         />
 
         <SelectElement
