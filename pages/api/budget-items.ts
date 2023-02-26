@@ -22,10 +22,21 @@ export default async function handler(
     return res.status(user.errorStatus).json({ detail: user })
 
   if (req.method === 'GET') {
+    const { accumulates } = req.query
+
+    let filter: any = { companyUuid: user.companyUuid }
+    let order: any = { code: 'asc' }
+
+    if (
+      accumulates !== undefined &&
+      (accumulates === 'true' || accumulates === 'false')
+    ) {
+      filter = { ...filter, accumulates: accumulates === 'true' ? true : false }
+      order = { name: 'asc' }
+    }
+
     const budgetItems = await prisma.budget_item.findMany({
-      where: {
-        companyUuid: user.companyUuid,
-      },
+      where: filter,
       select: {
         uuid: true,
         code: true,
@@ -42,9 +53,7 @@ export default async function handler(
           },
         },
       },
-      orderBy: {
-        code: 'asc',
-      },
+      orderBy: order,
     })
 
     return res.status(200).json({ detail: budgetItems })

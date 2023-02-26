@@ -13,7 +13,11 @@ import {
 } from './CompanyTypes'
 import { UserResponseType } from './UserTypes'
 import { UserInputType, UserInputTypeProps } from './UserInputTypeProps'
-import { BudgetItemDataType, BudgetItemResponseType } from './BudgetItemTypes'
+import {
+  BudgetItemDataType,
+  BudgetItemResponseType,
+  BudgetItemCreateType,
+} from './BudgetItemTypes'
 import { InvoiceDataType } from './InvoiceTypes'
 import { SupplierDataType, SupplierResponseType } from './SupplierTypes'
 
@@ -35,4 +39,5 @@ export type {
   SupplierResponseType,
   UserInputTypeProps,
   BudgetItemResponseType,
+  BudgetItemCreateType,
 }
