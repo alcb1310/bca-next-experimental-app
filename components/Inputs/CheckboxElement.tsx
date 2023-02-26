@@ -1,3 +1,5 @@
+import { ErrorInterface } from '@/types'
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default function CheckboxElement({
   name,
@@ -5,18 +7,20 @@ export default function CheckboxElement({
   required,
   checked,
   onChange,
+  error,
 }: {
-  name: string;
-  label: string;
-  required: boolean;
-  checked: boolean;
-  onChange: any;
+  name: string
+  label: string
+  required: boolean
+  checked: boolean
+  onChange: any
+  error: ErrorInterface | null
 }) {
   return (
-    <div className="flex items-center my-4">
+    <div className="my-4 flex items-center">
       <input
         type="checkbox"
-        className="w-4 h-4 text-indigo-600 bg-gray-100 rounder border-gray-300 focus:ring-indigo-600 focus:ring-2 mr-2"
+        className="rounder mr-2 h-4 w-4 border-gray-300 bg-gray-100 text-indigo-600 focus:ring-2 focus:ring-indigo-600"
         id={name}
         name={name}
         checked={checked}
@@ -25,6 +29,9 @@ export default function CheckboxElement({
       <label htmlFor={name}>
         {label} {required && <span className="text-red-600">*</span>}
       </label>
+      {error !== null && error.errorKey === name && (
+        <p className="text-sm text-red-600">{error.errorDescription}</p>
+      )}
     </div>
-  );
+  )
 }

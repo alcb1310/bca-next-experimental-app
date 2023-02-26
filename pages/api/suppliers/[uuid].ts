@@ -47,29 +47,46 @@ export default async function handler(
 
     const { supplier_id, name, contact_name, contact_email, contact_phone } =
       req.body
+    try {
+      const response = await prisma.supplier.update({
+        where: {
+          uuid: supplierUuid,
+        },
+        data: {
+          supplier_id: supplier_id ? supplier_id : supplier.supplier_id,
+          name: name ? name : supplier.name,
+          contact_name: contact_name ? contact_name : supplier.contact_name,
+          contact_email: contact_email ? contact_email : supplier.contact_email,
+          contact_phone: contact_phone ? contact_phone : supplier.contact_phone,
+        },
+        select: {
+          uuid: true,
+          supplier_id: true,
+          name: true,
+          contact_name: true,
+          contact_email: true,
+          contact_phone: true,
+        },
+      })
 
-    const response = await prisma.supplier.update({
-      where: {
-        uuid: supplierUuid,
-      },
-      data: {
-        supplier_id: supplier_id ? supplier_id : supplier.supplier_id,
-        name: name ? name : supplier.name,
-        contact_name: contact_name ? contact_name : supplier.contact_name,
-        contact_email: contact_email ? contact_email : supplier.contact_email,
-        contact_phone: contact_phone ? contact_phone : supplier.contact_phone,
-      },
-      select: {
-        uuid: true,
-        supplier_id: true,
-        name: true,
-        contact_name: true,
-        contact_email: true,
-        contact_phone: true,
-      },
-    })
-
-    return res.status(200).json({ detail: response })
+      return res.status(200).json({ detail: response })
+    } catch (error: any) {
+      if ('code' in error && error.code === 'P2002')
+        return res.status(409).json({
+          detail: {
+            errorStatus: 409,
+            errorKey: error.meta.target[0],
+            errorDescription: `${error.meta.target[0]} already exists`,
+          },
+        })
+      console.error(error.code)
+      return res.status(406).json({
+        detail: {
+          errorStatus: 406,
+          errorDescription: 'unknown error, please check your server logs',
+        },
+      })
+    }
   }
 
   res.status(500).json({
