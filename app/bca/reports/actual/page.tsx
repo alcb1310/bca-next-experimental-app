@@ -33,7 +33,7 @@ export default function ActualHome() {
     event.preventDefault()
 
     const res = await fetch(
-      `/api/budget?project=${selectedProject}&level=${level}`
+      `/api/budgets?project=${selectedProject}&level=${level}`
     )
 
     if (!res.ok) {
