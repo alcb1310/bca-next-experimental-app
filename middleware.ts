@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { JWTVerifyResult, jwtVerify } from 'jose';
-import validateRole from './pages/helpers/authorization/validateRole';
+import validateRole from '@/helpers/api/authorization/validateRole';
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {

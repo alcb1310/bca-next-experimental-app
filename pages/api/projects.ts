@@ -1,12 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import prisma from '@/prisma/client'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { getAllProjects, validateLoginInformation } from '../helpers/users'
-import { ErrorInterface } from '@/types'
+import prisma from '@/prisma/client';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { getAllProjects, validateLoginInformation } from '@/helpers/api/users';
+import { ErrorInterface } from '@/types';
 
 type Data = {
-  detail: Array<{ uuid: string; name: string }> | ErrorInterface
-}
+  detail: Array<{ uuid: string; name: string; }> | ErrorInterface;
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,26 +14,26 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     // reading thata from the projects
-    const user = await validateLoginInformation(req)
+    const user = await validateLoginInformation(req);
     if ('errorStatus' in user) {
-      return res.status(user.errorStatus).json({ detail: user })
+      return res.status(user.errorStatus).json({ detail: user });
     }
 
-    let active: boolean | undefined = undefined
+    let active: boolean | undefined = undefined;
     switch (req.query.active) {
       case 'true':
-        active = true
-        break
+        active = true;
+        break;
       case 'false':
-        active = false
-        break
+        active = false;
+        break;
       default:
-        active = undefined
+        active = undefined;
     }
 
-    const projects = await getAllProjects(user.companyUuid!, active)
+    const projects = await getAllProjects(user.companyUuid!, active);
 
-    return res.status(200).json({ detail: projects })
+    return res.status(200).json({ detail: projects });
   }
 
   res.status(500).json({
@@ -42,5 +42,5 @@ export default async function handler(
       errorDescription: 'Metod not implemented',
       errorKey: 'method',
     },
-  })
+  });
 }

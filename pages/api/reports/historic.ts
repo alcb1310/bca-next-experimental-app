@@ -1,25 +1,25 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { validateLoginInformation } from '@/pages/helpers/users'
-import { ErrorInterface } from '@/types'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { getAllHistoric } from '@/pages/helpers/reports'
-import { HistoricResponseType } from '@/types/HistoricResponseType'
-import { formatManyHistoricResponse } from '@/helpers/formatHistoricResponse'
+import { validateLoginInformation } from '@/helpers/api/users';
+import { ErrorInterface } from '@/types';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { getAllHistoric } from '@/helpers/api/reports';
+import { HistoricResponseType } from '@/types/HistoricResponseType';
+import { formatManyHistoricResponse } from '@/helpers/formatHistoricResponse';
 
 type Data = {
-  detail: string | ErrorInterface | HistoricResponseType[]
-}
+  detail: string | ErrorInterface | HistoricResponseType[];
+};
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'GET') {
-    const user = await validateLoginInformation(req)
+    const user = await validateLoginInformation(req);
     if ('errorStatus' in user) {
-      return res.status(user.errorStatus).json({ detail: user })
+      return res.status(user.errorStatus).json({ detail: user });
     }
-    const { date, level, project } = req.query
+    const { date, level, project } = req.query;
 
     if (project === undefined)
       return res.status(400).json({
@@ -28,7 +28,7 @@ export default async function handler(
           errorKey: 'project',
           errorDescription: 'project is required',
         },
-      })
+      });
 
     if (level === undefined)
       return res.status(400).json({
@@ -37,7 +37,7 @@ export default async function handler(
           errorKey: 'level',
           errorDescription: 'level is required',
         },
-      })
+      });
 
     if (date === undefined)
       return res.status(400).json({
@@ -46,9 +46,9 @@ export default async function handler(
           errorKey: 'date',
           errorDescription: 'date is required',
         },
-      })
+      });
 
-    const levelNumber = parseInt(level as string, 10)
+    const levelNumber = parseInt(level as string, 10);
     if (Number.isNaN(levelNumber))
       return res.status(400).json({
         detail: {
@@ -56,9 +56,9 @@ export default async function handler(
           errorKey: 'level',
           errorDescription: 'level has to be a number',
         },
-      })
+      });
 
-    const dateValue = new Date(date as string)
+    const dateValue = new Date(date as string);
     if (dateValue.toString() === 'Invalid Date')
       return res.status(400).json({
         detail: {
@@ -66,18 +66,18 @@ export default async function handler(
           errorKey: 'date',
           errorDescription: 'Date is invalid',
         },
-      })
+      });
 
     const historicResponce = await getAllHistoric(
       project as string,
       levelNumber,
       dateValue,
       user
-    )
+    );
 
     return res
       .status(200)
-      .json({ detail: formatManyHistoricResponse(historicResponce) })
+      .json({ detail: formatManyHistoricResponse(historicResponce) });
   }
 
   res.status(500).json({
@@ -85,5 +85,5 @@ export default async function handler(
       errorStatus: 500,
       errorDescription: 'Method not implemented',
     },
-  })
+  });
 }

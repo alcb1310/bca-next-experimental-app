@@ -1,29 +1,29 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import prisma from '@/prisma/client'
-import { validateLoginInformation } from '../helpers/users'
-import { formatManyBudgetResponse } from '@/helpers/formatBudgetResponse'
-import type { NextApiRequest, NextApiResponse } from 'next'
+import prisma from '@/prisma/client';
+import { validateLoginInformation } from '@/helpers/api/users';
+import { formatManyBudgetResponse } from '@/helpers/formatBudgetResponse';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import type {
   BudgetFormattedResponseType,
   BudgetResponseType,
   ErrorInterface,
-} from '@/types'
+} from '@/types';
 
 type Data = {
-  detail: string | ErrorInterface | BudgetFormattedResponseType[]
-}
+  detail: string | ErrorInterface | BudgetFormattedResponseType[];
+};
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'GET') {
-    const user = await validateLoginInformation(req)
+    const user = await validateLoginInformation(req);
     if ('errorStatus' in user) {
-      return res.status(user.errorStatus).json({ detail: user })
+      return res.status(user.errorStatus).json({ detail: user });
     }
 
-    const { project, level } = req.query
+    const { project, level } = req.query;
 
     if (typeof project === 'string' && typeof level === 'string') {
       const results = (await prisma.budgetView.findMany({
@@ -37,9 +37,9 @@ export default async function handler(
         orderBy: {
           code: 'asc',
         },
-      })) as BudgetResponseType[]
+      })) as BudgetResponseType[];
 
-      return res.status(200).json({ detail: formatManyBudgetResponse(results) })
+      return res.status(200).json({ detail: formatManyBudgetResponse(results) });
     }
 
     return res.status(400).json({
@@ -48,7 +48,7 @@ export default async function handler(
         errorKey: 'parameters',
         errorDescription: 'Invalid parameters',
       },
-    })
+    });
   }
 
   res.status(500).json({
@@ -57,5 +57,5 @@ export default async function handler(
       errorKey: 'method',
       errorDescription: 'Method not implemented',
     },
-  })
+  });
 }
