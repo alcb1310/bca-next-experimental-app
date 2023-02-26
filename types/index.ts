@@ -1,7 +1,7 @@
 import { ErrorInterface } from './ErrorInterface'
 import { CredentialsInterface } from './CredentialsInterface'
 import { Balance } from './Balance'
-import { ProjectType } from './ProjectType'
+import { ProjectType, ProjectCreateType } from './ProjectType'
 import {
   BudgetResponseType,
   BudgetFormattedResponseType,
@@ -40,4 +40,5 @@ export type {
   UserInputTypeProps,
   BudgetItemResponseType,
   BudgetItemCreateType,
+  ProjectCreateType,
 }
