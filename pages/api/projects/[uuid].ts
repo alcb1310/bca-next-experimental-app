@@ -33,6 +33,17 @@ export default async function handler(
   if (req.method === 'PUT') {
     const { name, is_active } = req.body
 
+    if (typeof is_active !== 'boolean')
+      return res
+        .status(400)
+        .json({
+          detail: {
+            errorStatus: 400,
+            errorKey: 'is_active',
+            errorDescription: 'is_active must be a boolean',
+          },
+        })
+
     try {
       const data = await prisma.project.update({
         where: {
