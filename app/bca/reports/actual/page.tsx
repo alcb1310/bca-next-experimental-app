@@ -59,16 +59,16 @@ export default function ActualHome() {
         <td className="px-3">{budget.budgetItem.code}</td>
         <td className="px-3">{budget.budgetItem.name}</td>
         <td className="px-3 text-right">
-          {budget.to_spend_cost
-            ? returnTwoDigitFormattedNumber(budget.to_spend_cost)
+          {budget.spent_quantity
+            ? returnTwoDigitFormattedNumber(budget.spent_quantity)
             : ''}
         </td>
         <td className="px-3 text-right">
-          {returnTwoDigitFormattedNumber(budget.to_spend_total)}
+          {returnTwoDigitFormattedNumber(budget.spent_total)}
         </td>
         <td className="px-3 text-right">
-          {budget.spent_quantity
-            ? returnTwoDigitFormattedNumber(budget.spent_quantity)
+          {budget.to_spend_quantity
+            ? returnTwoDigitFormattedNumber(budget.to_spend_quantity)
             : ''}
         </td>
         <td className="px-3 text-right">
