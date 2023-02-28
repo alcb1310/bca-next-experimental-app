@@ -39,5 +39,5 @@ export default function SearchBar({
         <span className="sr-only">Search</span>
       </button>
     </>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-'use client'
-import { ErrorInterface, SupplierResponseType } from '@/types'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import PrimaryButton from '../Buttons/PrimaryButton'
-import SecondaryButton from '../Buttons/SecondaryButton'
-import { InputElement } from '../Inputs'
-import SuccessAlert from '../SuccessAlert'
+"use client"
+import { ErrorInterface, SupplierResponseType } from "@/types"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
+import PrimaryButton from "../Buttons/PrimaryButton"
+import SecondaryButton from "../Buttons/SecondaryButton"
+import { InputElement } from "../Inputs"
+import SuccessAlert from "../SuccessAlert"
 
 type SupplierCreate = {
   uuid?: string
@@ -47,16 +47,16 @@ export default function SupplierFormModal({
 
     if (supplier?.uuid) {
       const result = await fetch(`/api/suppliers/${supplier.uuid}`, {
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify(supplier),
         headers: {
-          'Content-type': 'application/json',
+          "Content-type": "application/json",
         },
       })
 
       const data = await result.json()
 
-      if ('errorStatus' in data.detail) {
+      if ("errorStatus" in data.detail) {
         setError(data.detail)
         return
       }
@@ -66,17 +66,17 @@ export default function SupplierFormModal({
       return
     }
 
-    const result = await fetch('/api/suppliers', {
-      method: 'POST',
+    const result = await fetch("/api/suppliers", {
+      method: "POST",
       body: JSON.stringify(supplier),
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
     })
 
     const data = await result.json()
 
-    if ('errorStatus' in data.detail) {
+    if ("errorStatus" in data.detail) {
       setError(data.detail)
       return
     }
@@ -92,7 +92,7 @@ export default function SupplierFormModal({
           {showSuccess && <SuccessAlert message="Supplier saved successfuly" />}
           <div className="flex items-end justify-end rounded-t border-b border-solid border-slate-200 py-5">
             <h2 className="text-center text-xl font-semibold">
-              {supplier?.uuid ? 'Edit Supplier' : 'Add Supplier'}
+              {supplier?.uuid ? "Edit Supplier" : "Add Supplier"}
             </h2>
           </div>
           <div className="mb-5">
@@ -102,7 +102,7 @@ export default function SupplierFormModal({
                 error={error}
                 inputName="supplier_id"
                 required
-                inputType={'text'}
+                inputType={"text"}
                 onChange={handleChange}
                 value={supplier?.supplier_id}
                 enabled
@@ -113,7 +113,7 @@ export default function SupplierFormModal({
                 error={error}
                 inputName="name"
                 required
-                inputType={'text'}
+                inputType={"text"}
                 onChange={handleChange}
                 value={supplier?.name}
                 enabled
@@ -124,9 +124,9 @@ export default function SupplierFormModal({
                 error={error}
                 inputName="contact_name"
                 required={false}
-                inputType={'text'}
+                inputType={"text"}
                 onChange={handleChange}
-                value={supplier?.contact_name ? supplier.contact_name : ''}
+                value={supplier?.contact_name ? supplier.contact_name : ""}
                 enabled
               />
 
@@ -135,9 +135,9 @@ export default function SupplierFormModal({
                 error={error}
                 inputName="contact_email"
                 required={false}
-                inputType={'text'}
+                inputType={"text"}
                 onChange={handleChange}
-                value={supplier?.contact_email ? supplier.contact_email : ''}
+                value={supplier?.contact_email ? supplier.contact_email : ""}
                 enabled
               />
 
@@ -146,9 +146,9 @@ export default function SupplierFormModal({
                 error={error}
                 inputName="contact_phone"
                 required={false}
-                inputType={'text'}
+                inputType={"text"}
                 onChange={handleChange}
-                value={supplier?.contact_phone ? supplier.contact_phone : ''}
+                value={supplier?.contact_phone ? supplier.contact_phone : ""}
                 enabled
               />
 

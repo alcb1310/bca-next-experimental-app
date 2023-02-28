@@ -1,9 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { getAllProjects, validateLoginInformation } from '@/helpers/api/users'
-import { ErrorInterface, ProjectType } from '@/types'
-import prisma from '@/prisma/client'
-import { v4 } from 'uuid'
+import type { NextApiRequest, NextApiResponse } from "next"
+import { getAllProjects, validateLoginInformation } from "@/helpers/api/users"
+import { ErrorInterface, ProjectType } from "@/types"
+import prisma from "@/prisma/client"
+import { v4 } from "uuid"
 
 type Data = {
   detail: ErrorInterface | ProjectType[] | ProjectType
@@ -14,18 +14,18 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const user = await validateLoginInformation(req)
-  if ('errorStatus' in user) {
+  if ("errorStatus" in user) {
     return res.status(user.errorStatus).json({ detail: user })
   }
 
-  if (req.method === 'GET') {
+  if (req.method === "GET") {
     // reading data from the projects
     let active: boolean | undefined = undefined
     switch (req.query.active) {
-      case 'true':
+      case "true":
         active = true
         break
-      case 'false':
+      case "false":
         active = false
         break
       default:
@@ -37,15 +37,15 @@ export default async function handler(
     return res.status(200).json({ detail: projects })
   }
 
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     const { name, is_active } = req.body
 
     if (name === undefined)
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'name',
-          errorDescription: 'name is required',
+          errorKey: "name",
+          errorDescription: "name is required",
         },
       })
 
@@ -53,16 +53,16 @@ export default async function handler(
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'is_active',
-          errorDescription: 'is_active is required',
+          errorKey: "is_active",
+          errorDescription: "is_active is required",
         },
       })
-    if (typeof is_active !== 'boolean')
+    if (typeof is_active !== "boolean")
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'is_active',
-          errorDescription: 'is_active must be boolean',
+          errorKey: "is_active",
+          errorDescription: "is_active must be boolean",
         },
       })
     try {
@@ -83,7 +83,7 @@ export default async function handler(
 
       return res.status(200).json({ detail: data })
     } catch (error: any) {
-      if ('code' in error && error.code === 'P2002')
+      if ("code" in error && error.code === "P2002")
         return res.status(409).json({
           detail: {
             errorStatus: 409,
@@ -95,7 +95,7 @@ export default async function handler(
       return res.status(406).json({
         detail: {
           errorStatus: 406,
-          errorDescription: 'unknown error, please check your server logs',
+          errorDescription: "unknown error, please check your server logs",
         },
       })
     }
@@ -104,8 +104,8 @@ export default async function handler(
   res.status(500).json({
     detail: {
       errorStatus: 500,
-      errorDescription: 'Metod not implemented',
-      errorKey: 'method',
+      errorDescription: "Metod not implemented",
+      errorKey: "method",
     },
   })
 }

@@ -1,16 +1,16 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import prisma from '@/prisma/client'
-import { validateLoginInformation } from '@/helpers/api/users'
-import { formatManyBudgetResponse } from '@/helpers/formatBudgetResponse'
-import type { NextApiRequest, NextApiResponse } from 'next'
+import prisma from "@/prisma/client"
+import { validateLoginInformation } from "@/helpers/api/users"
+import { formatManyBudgetResponse } from "@/helpers/formatBudgetResponse"
+import type { NextApiRequest, NextApiResponse } from "next"
 import type {
   BudgetFormattedResponseType,
   BudgetResponseType,
   ErrorInterface,
-} from '@/types'
-import { getOneProject } from '@/helpers/projects'
-import { getOneBudgetItem } from '@/helpers/api/budgetItem'
-import { createBudget } from '@/helpers/api/budget'
+} from "@/types"
+import { getOneProject } from "@/helpers/projects"
+import { getOneBudgetItem } from "@/helpers/api/budgetItem"
+import { createBudget } from "@/helpers/api/budget"
 
 type Data = {
   detail: string | ErrorInterface | BudgetFormattedResponseType[]
@@ -21,11 +21,11 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const user = await validateLoginInformation(req)
-  if ('errorStatus' in user) {
+  if ("errorStatus" in user) {
     return res.status(user.errorStatus).json({ detail: user })
   }
 
-  if (req.method === 'GET') {
+  if (req.method === "GET") {
     const { project, level } = req.query
 
     let filter: any = { company_uuid: user.companyUuid }
@@ -37,78 +37,78 @@ export default async function handler(
     const results = (await prisma.budgetView.findMany({
       where: filter,
       orderBy: {
-        code: 'asc',
+        code: "asc",
       },
     })) as BudgetResponseType[]
 
     return res.status(200).json({ detail: formatManyBudgetResponse(results) })
   }
 
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     const { project, budgetItem, quantity, cost } = req.body
     if (project === undefined)
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'project',
-          errorDescription: 'project is required',
+          errorKey: "project",
+          errorDescription: "project is required",
         },
       })
     if (budgetItem === undefined)
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'budgetItem',
-          errorDescription: 'budgetItem is required',
+          errorKey: "budgetItem",
+          errorDescription: "budgetItem is required",
         },
       })
     if (quantity === undefined)
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'quantity',
-          errorDescription: 'quantity is required',
+          errorKey: "quantity",
+          errorDescription: "quantity is required",
         },
       })
     if (cost === undefined)
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'cost',
-          errorDescription: 'cost is required',
+          errorKey: "cost",
+          errorDescription: "cost is required",
         },
       })
 
-    if (typeof project !== 'string')
+    if (typeof project !== "string")
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'project',
-          errorDescription: 'project must be a string',
+          errorKey: "project",
+          errorDescription: "project must be a string",
         },
       })
-    if (typeof budgetItem !== 'string')
+    if (typeof budgetItem !== "string")
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'budgetItem',
-          errorDescription: 'budgetItem must be a string',
+          errorKey: "budgetItem",
+          errorDescription: "budgetItem must be a string",
         },
       })
-    if (typeof quantity !== 'number')
+    if (typeof quantity !== "number")
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'quantity',
-          errorDescription: 'quantity must be numeric',
+          errorKey: "quantity",
+          errorDescription: "quantity must be numeric",
         },
       })
-    if (typeof cost !== 'number')
+    if (typeof cost !== "number")
       return res.status(400).json({
         detail: {
           errorStatus: 400,
-          errorKey: 'cost',
-          errorDescription: 'cost must be numeric',
+          errorKey: "cost",
+          errorDescription: "cost must be numeric",
         },
       })
 
@@ -118,8 +118,8 @@ export default async function handler(
         return res.status(404).json({
           detail: {
             errorStatus: 404,
-            errorKey: 'project',
-            errorDescription: 'project not found',
+            errorKey: "project",
+            errorDescription: "project not found",
           },
         })
 
@@ -131,8 +131,8 @@ export default async function handler(
         return res.status(404).json({
           detail: {
             errorStatus: 404,
-            errorKey: 'budgetItem',
-            errorDescription: 'budgetItem not found',
+            errorKey: "budgetItem",
+            errorDescription: "budgetItem not found",
           },
         })
 
@@ -146,13 +146,13 @@ export default async function handler(
 
       return res.status(201).json({ detail: createdBudget })
     } catch (error: any) {
-      if ('code' in error) {
-        if (error.code === 'P2023')
+      if ("code" in error) {
+        if (error.code === "P2023")
           return res.status(400).json({
             detail: { errorStatus: 400, errorDescription: error.meta.message },
           })
 
-        if (error.code === 'P2002')
+        if (error.code === "P2002")
           return res
             .status(409)
             .json({
@@ -166,8 +166,8 @@ export default async function handler(
   res.status(500).json({
     detail: {
       errorStatus: 500,
-      errorKey: 'method',
-      errorDescription: 'Method not implemented',
+      errorKey: "method",
+      errorDescription: "Method not implemented",
     },
   })
 }

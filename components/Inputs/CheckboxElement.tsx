@@ -1,4 +1,4 @@
-import { ErrorInterface } from '@/types'
+import { ErrorInterface } from "@/types"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default function CheckboxElement({

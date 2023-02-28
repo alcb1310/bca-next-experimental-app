@@ -1,7 +1,7 @@
-import { ButtonProps } from "@/types/ButtonTypes";
+import { ButtonProps } from "@/types/ButtonTypes"
 
 export default function SecondaryButton(props: ButtonProps) {
-  const { buttonType, text, onEvent } = props;
+  const { buttonType, text, onEvent } = props
 
   return (
     <button
@@ -12,5 +12,5 @@ export default function SecondaryButton(props: ButtonProps) {
     >
       {text}
     </button>
-  );
+  )
 }

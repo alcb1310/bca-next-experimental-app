@@ -1,16 +1,16 @@
-'use client'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+"use client"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function NavBar() {
   const router = useRouter()
 
   async function logout() {
-    const res = await fetch('/api/auth/logout', {
-      method: 'POST',
+    const res = await fetch("/api/auth/logout", {
+      method: "POST",
     })
 
-    router.push('/')
+    router.push("/")
   }
 
   return (
