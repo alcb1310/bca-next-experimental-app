@@ -9,6 +9,7 @@
     "semi": ["error", "never"],
     "prefer-const": "error",
     "no-trailing-spaces": "warn",
+    "react-hooks/exhaustive-deps": "off",
     "quotes": [
       "error",
       "double",
