@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ErrorInterface as ErrorType } from "@/types";
+import { ErrorInterface as ErrorType } from "@/types"
 
 type SelectElementType = {
   label: string;
@@ -13,7 +13,7 @@ type SelectElementType = {
 
 function SelectElement(props: SelectElementType) {
   const { label, error, inputName, required, value, onChange, children } =
-    props;
+    props
   return (
     <>
       <label className="block mt-4 mb-2 text-indigo-700" htmlFor={inputName}>
@@ -37,7 +37,7 @@ function SelectElement(props: SelectElementType) {
         <p className="text-red-600 text-sm">{error.errorDescription}</p>
       )}
     </>
-  );
+  )
 }
 
-export default SelectElement;
+export default SelectElement

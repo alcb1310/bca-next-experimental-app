@@ -1,4 +1,4 @@
-import { ButtonProps } from '@/types/ButtonTypes'
+import { ButtonProps } from "@/types/ButtonTypes"
 
 export default function PrimaryButton(props: ButtonProps) {
   const { buttonType, text, onEvent } = props

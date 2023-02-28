@@ -1,6 +1,6 @@
-import { returnTwoDigitFormattedNumber } from '@/helpers'
-import { BudgetItemViewResponseType } from '@/types/BudgetItemViewResponseType'
-import PrimaryButton from '../Buttons/PrimaryButton'
+import { returnTwoDigitFormattedNumber } from "@/helpers"
+import { BudgetItemViewResponseType } from "@/types/BudgetItemViewResponseType"
+import PrimaryButton from "../Buttons/PrimaryButton"
 
 export default function InvoiceDetailReportModal({
   invoiceData,

@@ -4,5 +4,5 @@ export default function Footer() {
 			<p>Made with ❤️ by your friends on alcb1310</p>
 			<p>&copy; {new Date().getFullYear()}</p>
 		</footer>
-	);
+	)
 }

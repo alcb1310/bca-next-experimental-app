@@ -1,4 +1,4 @@
-import { UserInputTypeProps } from '@/types'
+import { UserInputTypeProps } from "@/types"
 
 export default function InputElement({
   label,
@@ -26,7 +26,7 @@ export default function InputElement({
         className={`block w-full rounded-md text-indigo-700 focus:border-indigo-700 focus:ring-indigo-700 ${
           error !== null &&
           error.errorKey === inputName &&
-          'border-2 border-red-600'
+          "border-2 border-red-600"
         }`}
         value={value}
       />

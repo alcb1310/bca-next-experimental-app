@@ -1,19 +1,15 @@
 {
   "extends": [
     "next/core-web-vitals",
-    "plugin:prettier/recommended"
-  ],
-  "plugins": [
-    "@typescript-eslint",
+    "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
+  "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
-    "semi": [
-      "error",
-      "never"
-    ],
+    "semi": ["error", "never"],
     "prefer-const": "error",
     "no-trailing-spaces": "warn",
+    "react-hooks/exhaustive-deps": "off",
     "quotes": [
       "error",
       "double",
@@ -24,9 +20,7 @@
     "no-console": [
       "error",
       {
-        "allow": [
-          "error"
-        ]
+        "allow": ["error"]
       }
     ]
   }
