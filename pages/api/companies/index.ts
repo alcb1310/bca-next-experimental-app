@@ -116,6 +116,7 @@ export default async function handler(
           isActive: company.isActive,
         },
       })
+      // eslint-disable-next-line
     } catch (error: any) {
       if ("code" in error && error.code === "P2002")
         return res.status(409).json({

@@ -5,13 +5,13 @@ import { ErrorInterface, Balance } from "@/types"
 import type { NextApiRequest, NextApiResponse } from "next"
 
 type Data = {
-  detail: Balance[] | ErrorInterface;
-};
+  detail: Balance[] | ErrorInterface
+}
 
 type Query = {
-  project: string | undefined;
-  date: string | undefined;
-};
+  project: string | undefined
+  date: string | undefined
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -90,8 +90,6 @@ export default async function handler(
         date: "desc",
       },
     })
-
-    console.log(results)
 
     return res.status(200).json({ detail: results })
   }

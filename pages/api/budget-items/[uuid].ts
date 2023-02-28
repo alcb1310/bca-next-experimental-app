@@ -6,8 +6,8 @@ import { BudgetItemResponseType, ErrorInterface } from "@/types"
 import type { NextApiRequest, NextApiResponse } from "next"
 
 type Data = {
-  detail: string | ErrorInterface | BudgetItemResponseType;
-};
+  detail: string | ErrorInterface | BudgetItemResponseType
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -100,6 +100,7 @@ export default async function handler(
       })
 
       return res.status(200).json({ detail: response })
+      // eslint-disable-next-line
     } catch (error: any) {
       if ("code" in error && error.code === "P2002")
         return res.status(409).json({

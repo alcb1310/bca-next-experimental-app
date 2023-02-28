@@ -112,6 +112,7 @@ export default async function handler(
       )
 
       return res.status(200).json({ detail: updatedBudget })
+      // eslint-disable-next-line
     } catch (error: any) {
       console.error(error)
       return res.status(428).json({ detail: "Failed while updating" })

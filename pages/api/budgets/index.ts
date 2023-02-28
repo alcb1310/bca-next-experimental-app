@@ -28,6 +28,7 @@ export default async function handler(
   if (req.method === "GET") {
     const { project, level } = req.query
 
+    // eslint-disable-next-line
     let filter: any = { company_uuid: user.companyUuid }
 
     if (project !== undefined) filter = { ...filter, project_uuid: project }
@@ -145,6 +146,7 @@ export default async function handler(
       )
 
       return res.status(201).json({ detail: createdBudget })
+      // eslint-disable-next-line
     } catch (error: any) {
       if ("code" in error) {
         if (error.code === "P2023")
@@ -153,11 +155,9 @@ export default async function handler(
           })
 
         if (error.code === "P2002")
-          return res
-            .status(409)
-            .json({
-              detail: { errorStatus: 409, errorDescription: error.meta },
-            })
+          return res.status(409).json({
+            detail: { errorStatus: 409, errorDescription: error.meta },
+          })
       }
       console.error(error)
     }

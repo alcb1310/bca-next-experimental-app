@@ -34,15 +34,13 @@ export default async function handler(
     const { name, is_active } = req.body
 
     if (typeof is_active !== "boolean")
-      return res
-        .status(400)
-        .json({
-          detail: {
-            errorStatus: 400,
-            errorKey: "is_active",
-            errorDescription: "is_active must be a boolean",
-          },
-        })
+      return res.status(400).json({
+        detail: {
+          errorStatus: 400,
+          errorKey: "is_active",
+          errorDescription: "is_active must be a boolean",
+        },
+      })
 
     try {
       const data = await prisma.project.update({
@@ -61,6 +59,7 @@ export default async function handler(
       })
 
       return res.status(200).json({ detail: data })
+      // eslint-disable-next-line
     } catch (error: any) {
       if ("code" in error && error.code === "P2002")
         return res.status(409).json({

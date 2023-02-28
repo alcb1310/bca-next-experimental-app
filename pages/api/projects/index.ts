@@ -32,6 +32,7 @@ export default async function handler(
         active = undefined
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const projects = await getAllProjects(user.companyUuid!, active)
 
     return res.status(200).json({ detail: projects })
@@ -82,6 +83,7 @@ export default async function handler(
       })
 
       return res.status(200).json({ detail: data })
+      // eslint-disable-next-line
     } catch (error: any) {
       if ("code" in error && error.code === "P2002")
         return res.status(409).json({

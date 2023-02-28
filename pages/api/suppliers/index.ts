@@ -7,11 +7,11 @@ import { validateLoginInformation } from "@/helpers/api/users"
 
 type Data = {
   detail:
-  | string
-  | ErrorInterface
-  | SupplierResponseType[]
-  | SupplierResponseType;
-};
+    | string
+    | ErrorInterface
+    | SupplierResponseType[]
+    | SupplierResponseType
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -87,6 +87,7 @@ export default async function handler(
       })
 
       return res.status(201).json({ detail: response })
+      // eslint-disable-next-line
     } catch (error: any) {
       if ("code" in error && error.code === "P2002")
         return res.status(409).json({

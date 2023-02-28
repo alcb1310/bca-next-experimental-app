@@ -7,11 +7,11 @@ import { validateLoginInformation } from "@/helpers/api/users"
 
 type Data = {
   detail:
-  | string
-  | ErrorInterface
-  | BudgetItemResponseType[]
-  | BudgetItemResponseType;
-};
+    | string
+    | ErrorInterface
+    | BudgetItemResponseType[]
+    | BudgetItemResponseType
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -24,8 +24,10 @@ export default async function handler(
   if (req.method === "GET") {
     const { accumulates } = req.query
 
+    /* eslint-disable */
     let filter: any = { companyUuid: user.companyUuid }
-    let order: any = { code: "asc" }
+    let order: any = { code: 'asc' }
+    /* eslint-enable */
 
     if (
       accumulates !== undefined &&
@@ -143,6 +145,7 @@ export default async function handler(
         },
       })
       return res.status(201).json({ detail: result })
+      // eslint-disable-next-line
     } catch (error: any) {
       console.error(error)
       if ("code" in error && error.code === "P2002")
