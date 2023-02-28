@@ -11,9 +11,10 @@ import type {
 import { getOneProject } from "@/helpers/projects"
 import { getOneBudgetItem } from "@/helpers/api/budgetItem"
 import { createBudget } from "@/helpers/api/budget"
+import { budget } from "@prisma/client"
 
 type Data = {
-  detail: string | ErrorInterface | BudgetFormattedResponseType[]
+  detail: string | ErrorInterface | BudgetFormattedResponseType[] | budget
 }
 
 export default async function handler(
@@ -26,7 +27,7 @@ export default async function handler(
   }
 
   if (req.method === "GET") {
-    const { project, level } = req.query
+    const { project, level, accumulates } = req.query
 
     // eslint-disable-next-line
     let filter: any = { company_uuid: user.companyUuid }
@@ -34,6 +35,8 @@ export default async function handler(
     if (project !== undefined) filter = { ...filter, project_uuid: project }
     if (level !== undefined)
       filter = { ...filter, level: { lte: parseInt(level as string, 10) } }
+    if (accumulates !== undefined)
+      filter = { ...filter, accumulates: accumulates === "true" ? true : false }
 
     const results = (await prisma.budgetView.findMany({
       where: filter,
