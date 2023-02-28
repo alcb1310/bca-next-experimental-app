@@ -1,6 +1,7 @@
 "use client"
 import PrimaryButton from "@/components/Buttons/PrimaryButton"
 import { InputElement, SelectElement } from "@/components/Inputs"
+import SuccessAlert from "@/components/SuccessAlert"
 import { returnTwoDigitFormattedNumber } from "@/helpers"
 import {
   BudgetFormattedResponseType,
@@ -40,6 +41,7 @@ export default function Modal({
     undefined
   )
   const [total, setTotal] = useState<number | undefined>(undefined)
+  const [success, setSuccess] = useState<boolean>(false)
 
   useEffect(() => {
     ;(async () => {
@@ -62,6 +64,14 @@ export default function Modal({
     totalSaver()
   }, [])
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSuccess(false)
+    }, 1000)
+
+    return () => clearTimeout(timer)
+  }, [success])
+
   function totalSaver() {
     if (!budgetToSave?.quantity || !budgetToSave.cost) {
       setTotal(undefined)
@@ -77,6 +87,53 @@ export default function Modal({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+
+    if (budgetToSave?.uuid) {
+      // updating the budget
+      const result = await fetch(`/api/budgets/${budgetToSave.uuid}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(budgetToSave),
+      })
+
+      const data = await result.json()
+
+      if ("errorStatus" in data.detail) return
+
+      setBudgetToSave({
+        project: data.detail.projectUuid,
+        budgetItem: data.detail.budgetItemUuid,
+        quantity: data.detail.to_spend_quantity,
+        cost: data.detail.to_spend_cost,
+        uuid: data.detail.uuid,
+      })
+      setSuccess(true)
+      return
+    }
+
+    // creating the budget
+    const result = await fetch("/api/budgets", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(budgetToSave),
+    })
+
+    const data = await result.json()
+
+    if ("errorStatus" in data.detail) return
+
+    setBudgetToSave({
+      project: data.detail.projectUuid,
+      budgetItem: data.detail.budgetItemUuid,
+      quantity: data.detail.to_spend_quantity,
+      cost: data.detail.to_spend_cost,
+      uuid: data.detail.uuid,
+    })
+    setSuccess(true)
   }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -96,6 +153,7 @@ export default function Modal({
       <div className="relative my-6 mx-auto w-1/2 max-w-3xl">
         <div className="relative flex w-full flex-col rounded-lg border-0 bg-white px-4 shadow-lg outline-none focus:outline-none">
           {/* Show success message*/}
+          {success && <SuccessAlert message="Budget saved successfuly" />}
           <div className="flex items-end justify-end rounded-t border-b border-solid border-slate-200 py-5">
             <h2 className="text-center text-xl font-semibold">
               {budgetToSave?.uuid ? "Edit Budget" : "Add Budget"}
