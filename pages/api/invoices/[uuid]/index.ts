@@ -51,7 +51,7 @@ export default async function handler(
     }
 
     if (req.method === "PUT") {
-      const { project, supplier, date } = req.body
+      const { project, supplier, date, invoice_number } = req.body
 
       let data = {}
 
@@ -63,6 +63,9 @@ export default async function handler(
 
       if (date !== undefined && typeof date === "string")
         data = { ...data, date: new Date(date) }
+
+      if (invoice_number !== undefined && typeof invoice_number === "string")
+        data = { ...data, invoice_number }
 
       const response = await prisma.invoice.update({
         where: { uuid: invoice.uuid },
