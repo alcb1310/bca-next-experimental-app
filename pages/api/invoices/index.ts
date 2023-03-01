@@ -51,6 +51,9 @@ export default async function handler(
           },
         },
       },
+      orderBy: {
+        date: "desc",
+      },
     })
 
     return res.status(200).json({ detail: invoices })
