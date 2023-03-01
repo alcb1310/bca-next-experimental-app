@@ -1,8 +1,8 @@
-import prisma from '@/prisma/client'
-import { UserResponseType } from '@/types'
-import { budget_item } from '@prisma/client'
-import { sumAllSpent } from '.'
-import { getBudgetItem } from '../budgetItem'
+import prisma from "@/prisma/client"
+import { UserResponseType } from "@/types"
+import { budget_item } from "@prisma/client"
+import { sumAllSpent } from "."
+import { getBudgetItem } from "../budgetItem"
 
 export default async function getSpentBudgetItem(
   project: string,

@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import PrimaryButton from '@/components/Buttons/PrimaryButton'
-import { InputElement, SelectElement } from '@/components/Inputs'
-import { returnTwoDigitFormattedNumber } from '@/helpers'
-import { Balance } from '@/types'
-import { useState, use, useEffect, ChangeEvent, FormEvent } from 'react'
+import PrimaryButton from "@/components/Buttons/PrimaryButton"
+import { InputElement, SelectElement } from "@/components/Inputs"
+import { returnTwoDigitFormattedNumber } from "@/helpers"
+import { Balance } from "@/types"
+import { useState, use, useEffect, ChangeEvent, FormEvent } from "react"
 
 type ProjectType = {
   uuid: string
@@ -13,13 +13,13 @@ type ProjectType = {
 
 export default function BalanceHome() {
   const [projects, setProjects] = useState<ProjectType[]>([])
-  const [selectedProject, setSelectedProject] = useState<string>('')
-  const [selectedDate, setSelectedDate] = useState<string>('')
+  const [selectedProject, setSelectedProject] = useState<string>("")
+  const [selectedDate, setSelectedDate] = useState<string>("")
   const [balance, setBalance] = useState<Balance[]>([])
 
   useEffect(() => {
     ;(async () => {
-      const res = await fetch('/api/projects?active=true')
+      const res = await fetch("/api/projects?active=true")
       const data = await res.json()
       setProjects(data.detail)
     })()
@@ -55,7 +55,9 @@ export default function BalanceHome() {
       <tr key={info.uuid} className="even:bg-indigo-100 hover:bg-indigo-200">
         <td className="px-3">{info.supplier?.name}</td>
         <td className="px-3 text-right">{info.invoice_number}</td>
-        <td className="px-3 text-center">{new Date(info.date).toDateString()}</td>
+        <td className="px-3 text-center">
+          {new Date(info.date).toDateString()}
+        </td>
         <td className="px-3 text-right">
           {returnTwoDigitFormattedNumber(info.total)}
         </td>

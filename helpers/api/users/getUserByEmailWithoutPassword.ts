@@ -1,4 +1,4 @@
-import prisma from '@/prisma/client'
+import prisma from "@/prisma/client"
 // import { ModuleInterface } from "@/types";
 
 export default async function getUserByEmailWithoutPassword(email: string) {

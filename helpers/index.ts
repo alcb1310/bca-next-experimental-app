@@ -1,3 +1,3 @@
-import returnTwoDigitFormattedNumber from "./returnTwoDigitFormattedNumber";
+import returnTwoDigitFormattedNumber from "./returnTwoDigitFormattedNumber"
 
-export { returnTwoDigitFormattedNumber };
+export { returnTwoDigitFormattedNumber }

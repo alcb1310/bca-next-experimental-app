@@ -1,5 +1,5 @@
-import prisma from '@/prisma/client'
-import { SupplierResponseType } from '@/types'
+import prisma from "@/prisma/client"
+import { SupplierResponseType } from "@/types"
 
 export default async function getOneSupplier(
   supplierUuid: string,

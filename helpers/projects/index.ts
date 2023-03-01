@@ -1,3 +1,3 @@
-import getOneProject from './getOneProject'
+import getOneProject from "./getOneProject"
 
 export { getOneProject }

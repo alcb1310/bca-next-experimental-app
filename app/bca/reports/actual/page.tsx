@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import PrimaryButton from '@/components/Buttons/PrimaryButton'
-import { SelectElement } from '@/components/Inputs'
-import { returnTwoDigitFormattedNumber } from '@/helpers'
-import { BudgetFormattedResponseType, ProjectType } from '@/types'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import PrimaryButton from "@/components/Buttons/PrimaryButton"
+import { SelectElement } from "@/components/Inputs"
+import { returnTwoDigitFormattedNumber } from "@/helpers"
+import { BudgetFormattedResponseType, ProjectType } from "@/types"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 
 export default function ActualHome() {
   const [projects, setProjects] = useState<ProjectType[]>([])
-  const [selectedProject, setSelectedProject] = useState<string>('')
+  const [selectedProject, setSelectedProject] = useState<string>("")
   const [level, setLevel] = useState<number>(1)
   const [budgets, setBudgets] = useState<BudgetFormattedResponseType[]>([])
 
   useEffect(() => {
     ;(async () => {
-      const res = await fetch('/api/projects?active=true')
+      const res = await fetch("/api/projects?active=true")
       const data = await res.json()
       setProjects(data.detail)
     })()
@@ -25,7 +25,7 @@ export default function ActualHome() {
   }
 
   function handleLevelChange(event: ChangeEvent<HTMLInputElement>) {
-    if (event.target.value === '') setLevel(1)
+    if (event.target.value === "") setLevel(1)
     setLevel(parseInt(event.target.value, 10))
   }
 
@@ -37,7 +37,7 @@ export default function ActualHome() {
     )
 
     if (!res.ok) {
-      console.error('invalid data')
+      console.error("invalid data")
       return
     }
 
@@ -61,7 +61,7 @@ export default function ActualHome() {
         <td className="px-3 text-right">
           {budget.spent_quantity
             ? returnTwoDigitFormattedNumber(budget.spent_quantity)
-            : ''}
+            : ""}
         </td>
         <td className="px-3 text-right">
           {returnTwoDigitFormattedNumber(budget.spent_total)}
@@ -69,12 +69,12 @@ export default function ActualHome() {
         <td className="px-3 text-right">
           {budget.to_spend_quantity
             ? returnTwoDigitFormattedNumber(budget.to_spend_quantity)
-            : ''}
+            : ""}
         </td>
         <td className="px-3 text-right">
           {budget.to_spend_cost
             ? returnTwoDigitFormattedNumber(budget.to_spend_cost)
-            : ''}
+            : ""}
         </td>
         <td className="px-3 text-right">
           {returnTwoDigitFormattedNumber(budget.to_spend_total)}
@@ -138,7 +138,7 @@ export default function ActualHome() {
         </SelectElement>
 
         <PrimaryButton
-          buttonType={'submit'}
+          buttonType={"submit"}
           text="Submit"
           onEvent={handleSubmit}
         />

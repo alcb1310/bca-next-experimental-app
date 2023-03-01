@@ -1,9 +1,9 @@
-'use client'
-import PrimaryButton from '@/components/Buttons/PrimaryButton'
-import { CheckboxElement, InputElement } from '@/components/Inputs'
-import SuccessAlert from '@/components/SuccessAlert'
-import { ErrorInterface, ProjectCreateType, ProjectType } from '@/types'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+"use client"
+import PrimaryButton from "@/components/Buttons/PrimaryButton"
+import { CheckboxElement, InputElement } from "@/components/Inputs"
+import SuccessAlert from "@/components/SuccessAlert"
+import { ErrorInterface, ProjectCreateType, ProjectType } from "@/types"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 
 export default function Modal({
   projectData,
@@ -30,7 +30,7 @@ export default function Modal({
     const { name, value, checked } = event.target
     setProject((prevProject) => ({
       ...prevProject,
-      [name]: name === 'is_active' ? checked : value,
+      [name]: name === "is_active" ? checked : value,
     }))
   }
 
@@ -38,15 +38,15 @@ export default function Modal({
     event.preventDefault()
     if (project?.uuid) {
       const response = await fetch(`/api/projects/${project.uuid}`, {
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify(project),
         headers: {
-          'Content-type': 'application/json',
+          "Content-type": "application/json",
         },
       })
 
       const data = await response.json()
-      if ('errorStatus' in data.detail) {
+      if ("errorStatus" in data.detail) {
         setError(data.detail)
         return
       }
@@ -60,16 +60,16 @@ export default function Modal({
       is_active: project?.is_active === undefined ? false : project.is_active,
     }
 
-    const response = await fetch('/api/projects', {
-      method: 'POST',
+    const response = await fetch("/api/projects", {
+      method: "POST",
       body: JSON.stringify(saveData),
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
     })
 
     const data = await response.json()
-    if ('errorStatus' in data.detail) {
+    if ("errorStatus" in data.detail) {
       setError(data.detail)
       return
     }
@@ -85,7 +85,7 @@ export default function Modal({
           {showSuccess && <SuccessAlert message="Project saved successfuly" />}
           <div className="flex items-end justify-end rounded-t border-b border-solid border-slate-200 py-5">
             <h2 className="text-center text-xl font-semibold">
-              {project?.uuid ? 'Edit Project' : 'Add Project'}
+              {project?.uuid ? "Edit Project" : "Add Project"}
             </h2>
           </div>
           <div className="mb-5">

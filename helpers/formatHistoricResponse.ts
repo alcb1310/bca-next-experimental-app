@@ -1,5 +1,5 @@
-import { HistoricResponseType } from '@/types/HistoricResponseType'
-import { HistoricView } from '@prisma/client'
+import { HistoricResponseType } from "@/types/HistoricResponseType"
+import { HistoricView } from "@prisma/client"
 
 export function formatManyHistoricResponse(historics: HistoricView[]) {
   return historics.map((historic) => formatOneHistoricResponse(historic))

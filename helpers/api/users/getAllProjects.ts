@@ -1,10 +1,11 @@
-import prisma from '@/prisma/client'
+import prisma from "@/prisma/client"
 // import { ModuleInterface } from "@/types";
 
 export default async function getAllProjects(
   companyUuid: string,
   active: boolean | undefined
 ) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let filter: any = { companyUuid: companyUuid }
 
   if (active !== undefined) filter = { ...filter, is_active: active }
@@ -17,7 +18,7 @@ export default async function getAllProjects(
       is_active: true,
     },
     orderBy: {
-      name: 'asc',
+      name: "asc",
     },
   })
 

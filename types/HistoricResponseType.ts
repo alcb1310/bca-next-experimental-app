@@ -1,4 +1,4 @@
-import { BudgetItemDataType, CompanyDataResponseType, ProjectType } from './'
+import { BudgetItemDataType, CompanyDataResponseType, ProjectType } from "./"
 
 export type HistoricResponseType = {
   uuid: string

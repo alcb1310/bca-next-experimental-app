@@ -1,4 +1,4 @@
-import { BudgetResponseType } from '@/types'
+import { BudgetResponseType } from "@/types"
 
 export function formatManyBudgetResponse(budgets: BudgetResponseType[]) {
   const formattedBudget = budgets.map((budget) =>

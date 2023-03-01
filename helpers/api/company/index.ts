@@ -1,3 +1,3 @@
-import getCompanyInformation from './getCompanyInformation'
+import getCompanyInformation from "./getCompanyInformation"
 
 export { getCompanyInformation }

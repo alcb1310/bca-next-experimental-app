@@ -1,6 +1,6 @@
-import prisma from '@/prisma/client'
-import { budget_item } from '@prisma/client'
-import { getChildrenBudgetItems } from '../budgetItem'
+import prisma from "@/prisma/client"
+import { budget_item } from "@prisma/client"
+import { getChildrenBudgetItems } from "../budgetItem"
 
 export default async function sumAllSpent(
   budgetData: budget_item,

@@ -1,8 +1,8 @@
-'use client'
-import PrimaryButton from '@/components/Buttons/PrimaryButton'
-import { ProjectType } from '@/types'
-import { useEffect, useState } from 'react'
-import Modal from './modal'
+"use client"
+import PrimaryButton from "@/components/Buttons/PrimaryButton"
+import { ProjectType } from "@/types"
+import { useEffect, useState } from "react"
+import Modal from "./modal"
 
 export default function ProjectsHome() {
   const [projects, setProjects] = useState<ProjectType[]>([])
@@ -13,7 +13,7 @@ export default function ProjectsHome() {
 
   useEffect(() => {
     ;(async () => {
-      const response = await fetch('/api/projects')
+      const response = await fetch("/api/projects")
       const data = await response.json()
 
       setProjects(data.detail)
@@ -27,7 +27,7 @@ export default function ProjectsHome() {
       onClick={() => {
         setSelectedProject(project)
         setShowModal(true)
-        console.log('selected')
+        console.log("selected")
       }}
     >
       <td className="border-x-2 p-3">{project.name}</td>
@@ -47,7 +47,7 @@ export default function ProjectsHome() {
               onEvent={() => {
                 setSelectedProject(undefined)
                 setShowModal(true)
-                console.log('create')
+                console.log("create")
               }}
             />
           </div>

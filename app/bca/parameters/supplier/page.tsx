@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import PrimaryButton from '@/components/Buttons/PrimaryButton'
-import SupplierFormModal from '@/components/Modals/SupplierFormModal'
-import { SupplierResponseType } from '@/types'
-import { useEffect, useState } from 'react'
+import PrimaryButton from "@/components/Buttons/PrimaryButton"
+import SupplierFormModal from "@/components/Modals/SupplierFormModal"
+import { SupplierResponseType } from "@/types"
+import { useEffect, useState } from "react"
 
 export default function SupplierHome() {
   const [suppliers, setSuppliers] = useState<SupplierResponseType[]>([])
@@ -14,7 +14,7 @@ export default function SupplierHome() {
 
   useEffect(() => {
     ;(async () => {
-      const response = await fetch('/api/suppliers')
+      const response = await fetch("/api/suppliers")
       const data = await response.json()
       setSuppliers(data.detail)
     })()

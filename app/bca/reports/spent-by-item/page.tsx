@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import PrimaryButton from '@/components/Buttons/PrimaryButton'
-import { InputElement, SelectElement } from '@/components/Inputs'
-import InvoiceDetailReportModal from '@/components/Modals/InvoiceDetailReportModal'
-import { returnTwoDigitFormattedNumber } from '@/helpers'
-import { ProjectType } from '@/types'
-import { BudgetItemViewResponseType } from '@/types/BudgetItemViewResponseType'
-import { budget_item } from '@prisma/client'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import PrimaryButton from "@/components/Buttons/PrimaryButton"
+import { InputElement, SelectElement } from "@/components/Inputs"
+import InvoiceDetailReportModal from "@/components/Modals/InvoiceDetailReportModal"
+import { returnTwoDigitFormattedNumber } from "@/helpers"
+import { ProjectType } from "@/types"
+import { BudgetItemViewResponseType } from "@/types/BudgetItemViewResponseType"
+import { budget_item } from "@prisma/client"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 
 type SpentByItemReportType = {
   budgetItem: budget_item
@@ -16,9 +16,9 @@ type SpentByItemReportType = {
 
 export default function SpentByItem() {
   const [projects, setProjects] = useState<ProjectType[]>([])
-  const [selectedProject, setSelectedProject] = useState<string>('')
+  const [selectedProject, setSelectedProject] = useState<string>("")
   const [level, setLevel] = useState<number>(1)
-  const [date, setDate] = useState<string>('')
+  const [date, setDate] = useState<string>("")
   const [spentByItem, setSpentByItem] = useState<SpentByItemReportType[]>([])
   const [invoiceDetailsInfo, setInvoiceDetailsInfo] = useState<
     BudgetItemViewResponseType[]
@@ -27,7 +27,7 @@ export default function SpentByItem() {
 
   useEffect(() => {
     ;(async () => {
-      const res = await fetch('/api/projects?active=true')
+      const res = await fetch("/api/projects?active=true")
       const data = await res.json()
       setProjects(data.detail)
     })()
