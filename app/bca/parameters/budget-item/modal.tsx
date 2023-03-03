@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import PrimaryButton from '@/components/Buttons/PrimaryButton'
+import PrimaryButton from "@/components/Buttons/PrimaryButton"
 import {
   CheckboxElement,
   InputElement,
   SelectElement,
-} from '@/components/Inputs'
-import SuccessAlert from '@/components/SuccessAlert'
-import { BudgetItemResponseType, ErrorInterface } from '@/types'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+} from "@/components/Inputs"
+import SuccessAlert from "@/components/SuccessAlert"
+import { BudgetItemResponseType, ErrorInterface } from "@/types"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 
 type BudgetItemCreateType = {
   uuid?: string
@@ -48,7 +48,7 @@ export default function Modal({
 
   useEffect(() => {
     ;(async () => {
-      const response = await fetch('/api/budget-items?accumulates=true')
+      const response = await fetch("/api/budget-items?accumulates=true")
       const data = await response.json()
 
       setParentBudgetItems(data.detail)
@@ -66,11 +66,11 @@ export default function Modal({
 
     let savedValue: any = value
 
-    if (name === 'level') savedValue = parseInt(value, 0)
+    if (name === "level") savedValue = parseInt(value, 0)
 
     setBudgetItem((prevBudgetItem) => ({
       ...prevBudgetItem,
-      [name]: name !== 'accumulates' ? savedValue : checked,
+      [name]: name !== "accumulates" ? savedValue : checked,
     }))
   }
 
@@ -79,15 +79,15 @@ export default function Modal({
 
     if (budgetItem?.uuid) {
       const response = await fetch(`/api/budget-items/${budgetItem.uuid}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-type': 'application/json',
+          "Content-type": "application/json",
         },
         body: JSON.stringify(budgetItem),
       })
 
       const data = await response.json()
-      if ('errorStatus' in data.detail) {
+      if ("errorStatus" in data.detail) {
         setError(data.detail)
         return
       }
@@ -115,17 +115,17 @@ export default function Modal({
       parentUuid: budgetItem?.parentUuid,
     }
 
-    const response = await fetch('/api/budget-items', {
-      method: 'POST',
+    const response = await fetch("/api/budget-items", {
+      method: "POST",
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
       body: JSON.stringify(createData),
     })
 
     const data = await response.json()
 
-    if ('errorStatus' in data.detail) {
+    if ("errorStatus" in data.detail) {
       setError(data.detail)
       return
     }
@@ -150,7 +150,7 @@ export default function Modal({
           )}
           <div className="flex items-end justify-end rounded-t border-b border-solid border-slate-200 py-5">
             <h2 className="text-center text-xl font-semibold">
-              {budgetItem?.uuid ? 'Edit Budget Item' : 'Add Budget Item'}
+              {budgetItem?.uuid ? "Edit Budget Item" : "Add Budget Item"}
             </h2>
           </div>
           <form onSubmit={handleSubmit} className="mb-5">

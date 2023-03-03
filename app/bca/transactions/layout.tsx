@@ -1,4 +1,4 @@
-import LinkButton from '@/components/Buttons/LinkButton'
+import LinkButton from "@/components/Buttons/LinkButton"
 
 export default function ParametersLayout({
   children,

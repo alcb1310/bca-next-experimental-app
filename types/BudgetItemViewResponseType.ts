@@ -4,7 +4,7 @@ import {
   InvoiceDataType,
   ProjectType,
   SupplierDataType,
-} from './'
+} from "./"
 
 export type BudgetItemViewResponseType = {
   uuid: string

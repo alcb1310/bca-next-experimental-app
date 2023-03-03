@@ -1,12 +1,12 @@
-'use client'
-import { ChangeEvent, FormEvent, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { CredentialsInterface } from '@/types'
+"use client"
+import { ChangeEvent, FormEvent, useState } from "react"
+import { useRouter } from "next/navigation"
+import { CredentialsInterface } from "@/types"
 
 export default function LoginPage() {
   const [credentials, setCredentials] = useState<CredentialsInterface>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   })
   const router = useRouter()
 
@@ -19,17 +19,17 @@ export default function LoginPage() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
       body: JSON.stringify(credentials),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
 
     if (!res.ok) return
 
-    router.push('/bca')
+    router.push("/bca")
   }
 
   return (

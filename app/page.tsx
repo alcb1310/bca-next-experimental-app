@@ -1,5 +1,5 @@
-import Link from "next/link";
-import Image from "next/image";
+import Link from "next/link"
+import Image from "next/image"
 
 function Home() {
   return (
@@ -16,13 +16,13 @@ function Home() {
             </p>
             <div className="space-x-2">
               <Link
-                className="text-gray-100 hover:bg-blue-300 mt-3 inline-block rounded-lg bg-dark px-8 py-2 font-bold uppercase tracking-wide shadow-lg hover:text-label hover:shadow-none"
+                className="mt-3 inline-block rounded-lg bg-dark px-8 py-2 font-bold uppercase tracking-wide text-gray-100 shadow-lg hover:bg-blue-300 hover:text-label hover:shadow-none"
                 href="#"
               >
                 Register
               </Link>
               <Link
-                className="bg-gray-300 hover:bg-blue-300 mt-3 inline-block rounded-lg px-8 py-2 font-bold uppercase tracking-wide text-dark shadow-lg hover:text-label hover:shadow-none"
+                className="mt-3 inline-block rounded-lg bg-gray-300 px-8 py-2 font-bold uppercase tracking-wide text-dark shadow-lg hover:bg-blue-300 hover:text-label hover:shadow-none"
                 href="/login"
               >
                 Login
@@ -39,7 +39,7 @@ function Home() {
         </div>
       </section>
       <section className="bg-dark">
-        <div className="text-gray-100 flex flex-wrap space-y-5 px-8 py-12">
+        <div className="flex flex-wrap space-y-5 px-8 py-12 text-gray-100">
           <article className="mx-auto w-44 rounded-xl bg-light py-8 px-3 text-center text-xl text-dark">
             <p>
               &quot;This app gives me the information I need to make better
@@ -67,42 +67,42 @@ function Home() {
         <div className="px-8-py-12 flex flex-wrap justify-around space-y-5">
           <div className="w-44 rounded-lg border-2 border-dark">
             <h4 className="px-3 py-2">Entry Level</h4>
-            <hr className="border-gray-300 border-b-2" />
+            <hr className="border-b-2 border-gray-300" />
             <ul className="list-inside list-disc p-3 decoration-dark">
               <li>Full access</li>
               <li>Up to 5 users</li>
             </ul>
-            <hr className="border-gray-300 border-b-2" />
-            <h5 className="text-red-600 px-3 py-2">
+            <hr className="border-b-2 border-gray-300" />
+            <h5 className="px-3 py-2 text-red-600">
               $ 15 <span className="text-gray-400">/ month</span>
             </h5>
           </div>
           <div className="w-44 rounded-lg border-2 border-dark">
             <h4 className="px-3 py-2">Mid Level</h4>
-            <hr className="border-gray-300 border-b-2" />
+            <hr className="border-b-2 border-gray-300" />
             <ul className="list-inside list-disc p-3">
               <li>Full access</li>
               <li>Up to 10 users</li>
             </ul>
-            <hr className="border-gray-300 border-b-2" />
-            <h5 className="text-red-600 px-3 py-2">
+            <hr className="border-b-2 border-gray-300" />
+            <h5 className="px-3 py-2 text-red-600">
               $ 30 <span className="text-gray-400">/ month</span>
             </h5>
           </div>
           <div className="w-44 rounded-lg border-2 border-dark">
             <h4 className="px-3 py-2">Corporate Level</h4>
-            <hr className="border-gray-300 border-b-2" />
+            <hr className="border-b-2 border-gray-300" />
             <ul className="list-inside list-disc p-3">
               <li>Full access</li>
               <li>Unlimited users</li>
             </ul>
-            <hr className="border-gray-300 border-b-2" />
-            <h5 className="text-gray-800 px-3 py-2">Contact us</h5>
+            <hr className="border-b-2 border-gray-300" />
+            <h5 className="px-3 py-2 text-gray-800">Contact us</h5>
           </div>
         </div>
       </section>
     </>
-  );
+  )
 }
 
-export default Home;
+export default Home

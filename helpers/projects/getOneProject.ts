@@ -1,4 +1,4 @@
-import prisma from '@/prisma/client'
+import prisma from "@/prisma/client"
 
 export default async function getOneProject(
   projectUuid: string,

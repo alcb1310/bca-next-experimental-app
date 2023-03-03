@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import PrimaryButton from '@/components/Buttons/PrimaryButton'
-import { BudgetItemResponseType } from '@/types'
-import { useEffect, useState } from 'react'
-import Modal from './modal'
+import PrimaryButton from "@/components/Buttons/PrimaryButton"
+import { BudgetItemResponseType } from "@/types"
+import { useEffect, useState } from "react"
+import Modal from "./modal"
 
 export default function BudgetItemHome() {
   const [budgetItems, setBudgetItems] = useState<BudgetItemResponseType[]>([])
@@ -14,7 +14,7 @@ export default function BudgetItemHome() {
 
   useEffect(() => {
     ;(async () => {
-      const response = await fetch('/api/budget-items')
+      const response = await fetch("/api/budget-items")
       const data = await response.json()
       setBudgetItems(data.detail)
     })()
@@ -43,7 +43,7 @@ export default function BudgetItemHome() {
         <caption className="mb-5">
           <div className="flex items-center justify-between">
             <h1 className="pb-5 text-2xl font-semibold uppercase">
-              {' '}
+              {" "}
               Budget Items
             </h1>
             <PrimaryButton

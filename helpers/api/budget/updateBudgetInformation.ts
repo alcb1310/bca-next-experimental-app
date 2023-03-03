@@ -1,6 +1,6 @@
-import prisma from '@/prisma/client'
-import { budget } from '@prisma/client'
-import { getOneBudgetItem } from '../budgetItem'
+import prisma from "@/prisma/client"
+import { budget } from "@prisma/client"
+import { getOneBudgetItem } from "../budgetItem"
 
 export default async function updateBudgetInformation(
   budgetToUpdate: budget,
@@ -32,7 +32,7 @@ export default async function updateBudgetInformation(
         budgetItem.budget_item.uuid,
         budgetToUpdate.companyUuid
       )
-      if (!budgetItem) throw new Error('unable to get budget info')
+      if (!budgetItem) throw new Error("unable to get budget info")
 
       const budget = await prisma.budget.findFirst({
         where: {
@@ -40,7 +40,7 @@ export default async function updateBudgetInformation(
           companyUuid: budgetToUpdate.companyUuid,
         },
       })
-      if (budget === null) throw new Error('unable to find budget')
+      if (budget === null) throw new Error("unable to find budget")
 
       await tx.budget.update({
         where: {

@@ -1,21 +1,21 @@
-'use client'
-import PrimaryButton from '@/components/Buttons/PrimaryButton'
-import { InputElement, SelectElement } from '@/components/Inputs'
-import { returnTwoDigitFormattedNumber } from '@/helpers'
-import { ProjectType } from '@/types'
-import { HistoricResponseType } from '@/types/HistoricResponseType'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+"use client"
+import PrimaryButton from "@/components/Buttons/PrimaryButton"
+import { InputElement, SelectElement } from "@/components/Inputs"
+import { returnTwoDigitFormattedNumber } from "@/helpers"
+import { ProjectType } from "@/types"
+import { HistoricResponseType } from "@/types/HistoricResponseType"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 
 export default function HistoricHome() {
   const [projects, setProjects] = useState<ProjectType[]>([])
-  const [selectedProject, setSelectedProject] = useState<string>('')
-  const [date, setDate] = useState<string>('')
+  const [selectedProject, setSelectedProject] = useState<string>("")
+  const [date, setDate] = useState<string>("")
   const [level, setLevel] = useState<number>(1)
   const [historics, setHistorics] = useState<HistoricResponseType[]>([])
 
   useEffect(() => {
     ;(async () => {
-      const res = await fetch('/api/projects')
+      const res = await fetch("/api/projects")
       const data = await res.json()
       setProjects(data.detail)
     })()
@@ -51,7 +51,7 @@ export default function HistoricHome() {
     return (
       <tr
         key={budget.uuid}
-        className={budget.budgetItem.accumulates ? 'font-bold' : 'font-normal'}
+        className={budget.budgetItem.accumulates ? "font-bold" : "font-normal"}
       >
         <td>{budget.budgetItem.code}</td>
         <td>{budget.budgetItem.name}</td>

@@ -1,6 +1,6 @@
-import { ErrorInterface } from './ErrorInterface'
+import { ErrorInterface } from "./ErrorInterface"
 
-export type UserInputType = 'text' | 'password' | 'email' | 'number' | 'date'
+export type UserInputType = "text" | "password" | "email" | "number" | "date"
 export type UserInputTypeProps = {
   label: string
   error: ErrorInterface | null

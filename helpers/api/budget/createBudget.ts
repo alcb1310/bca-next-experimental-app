@@ -1,7 +1,7 @@
-import prisma from '@/prisma/client'
-import { BudgetItemResponseType, UserResponseType } from '@/types'
-import { v4 } from 'uuid'
-import { getOneBudgetItem } from '../budgetItem'
+import prisma from "@/prisma/client"
+import { BudgetItemResponseType, UserResponseType } from "@/types"
+import { v4 } from "uuid"
+import { getOneBudgetItem } from "../budgetItem"
 
 export default async function createBudget(
   project: string,
@@ -38,7 +38,7 @@ export default async function createBudget(
         user.companyUuid
       )
 
-      if (!budgetItemToAdd) throw new Error('Unable to find budget item')
+      if (!budgetItemToAdd) throw new Error("Unable to find budget item")
       const nextBudget = await tx.budget.findFirst({
         where: {
           companyUuid: user.companyUuid,

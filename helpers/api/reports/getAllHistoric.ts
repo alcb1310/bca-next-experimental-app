@@ -1,5 +1,5 @@
-import prisma from '@/prisma/client'
-import { UserResponseType } from '@/types'
+import prisma from "@/prisma/client"
+import { UserResponseType } from "@/types"
 
 export default async function getAllHistoric(
   project: string,
