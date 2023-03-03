@@ -8,6 +8,8 @@ export default function ReportsHome() {
           src="/images/reports-background.jpg"
           alt="Report main page"
           className="w-full rounded-lg shadow-2xl"
+          width={500}
+          height={500}
         />
       </div>
     </div>

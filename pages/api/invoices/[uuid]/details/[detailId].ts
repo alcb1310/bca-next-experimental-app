@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { deleteInvoiceDetail } from "@/helpers/api/budgetItems"
 import { validateLoginInformation } from "@/helpers/api/users"
 import prisma from "@/prisma/client"
 import { DetailResponseType, ErrorInterface } from "@/types"
@@ -64,17 +65,20 @@ export default async function handler(
     })
 
     if (invoiceDetail === null)
-      return res
-        .status(404)
-        .json({
-          detail: {
-            errorStatus: 404,
-            errorDescription: "invoiceDetail not found",
-          },
-        })
+      return res.status(404).json({
+        detail: {
+          errorStatus: 404,
+          errorDescription: "invoiceDetail not found",
+        },
+      })
 
     if (req.method === "GET")
       return res.status(200).json({ detail: invoiceDetail })
+
+    if (req.method === "DELETE") {
+      await deleteInvoiceDetail(invoiceDetail, user.companyUuid)
+      return res.status(204).end()
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
@@ -84,8 +88,14 @@ export default async function handler(
           detail: { errorStatus: 422, errorDescription: error.meta.message },
         })
     }
+    if ("message" in error) {
+      const message = JSON.parse(error.message) as ErrorInterface
+      return res.status(message.errorStatus).json({ detail: message })
+    }
+    //if ("errorStatus" in JSON.parse(error.message))
+    //return res.status(error.errorStatus).json({ detail: error })
 
-    console.error(error)
+    //console.error(error)
     return res.status(500).json({
       detail: {
         errorStatus: 500,
