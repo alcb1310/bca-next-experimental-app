@@ -1,24 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { validateLoginInformation } from "@/helpers/api/users"
 import prisma from "@/prisma/client"
-import {
-  BudgetItemDataType,
-  ErrorInterface,
-  InvoiceResponseType,
-} from "@/types"
+import { DetailResponseType, ErrorInterface } from "@/types"
 import type { NextApiRequest, NextApiResponse } from "next"
 
-type DetailResponse = {
-  uuid: string
-  quantity: number
-  cost: number
-  total: number
-  budget_item: BudgetItemDataType
-  invoice: InvoiceResponseType
-}
-
 type Data = {
-  detail: string | ErrorInterface | DetailResponse[] | DetailResponse
+  detail: string | ErrorInterface | DetailResponseType[] | DetailResponseType
 }
 
 export default async function handler(

@@ -20,6 +20,7 @@ import {
 } from "./BudgetItemTypes"
 import { InvoiceDataType, InvoiceResponseType } from "./InvoiceTypes"
 import { SupplierDataType, SupplierResponseType } from "./SupplierTypes"
+import { DetailResponseType } from "./InvoiceDetailsTypes"
 
 export type {
   ErrorInterface,
@@ -42,4 +43,5 @@ export type {
   BudgetItemCreateType,
   ProjectCreateType,
   InvoiceResponseType,
+  DetailResponseType,
 }
