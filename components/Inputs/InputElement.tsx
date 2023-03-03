@@ -23,7 +23,7 @@ export default function InputElement({
         required={required}
         placeholder={label}
         type={inputType}
-        className={`block w-full rounded-md text-indigo-700 focus:border-indigo-700 focus:ring-indigo-700 ${
+        className={`block w-full rounded-md border-indigo-700 text-indigo-700 ring-indigo-700 focus:border-indigo-700 focus:ring-indigo-700 ${
           error !== null &&
           error.errorKey === inputName &&
           "border-2 border-red-600"
