@@ -4,6 +4,7 @@ export type BudgetItemDataType = {
   name: string
   accumulates: boolean
   level: number
+  parentUuid?: string | null
 }
 
 export type BudgetItemResponseType = {
