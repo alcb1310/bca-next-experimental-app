@@ -8,6 +8,8 @@ export default function ParametersHome() {
           src="/images/parameters-background.jpg"
           alt="main page"
           className="w-full rounded-lg shadow-2xl"
+          width={200}
+          height={200}
         />
       </div>
     </div>
